@@ -1,70 +1,157 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин товаров для животных</title>
+    <title>Магазин товарів для тварин</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
-
-<body>
+<body style="background-color">
     <header>
         <div class="logo">
-            <img src="imgs/Logo.png" alt="Логотип">
+            <img src="imgs/Logo.png" alt="Логотип магазину">
         </div>
         <nav>
             <ul>
                 <li><a href="#">Каталог</a></li>
-                <li><a href="#">Акции</a></li>
-                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Контакти</a></li>
             </ul>
         </nav>
+
         <div class="search-bar">
             <input type="text" placeholder="Я шукаю...">
             <button>Пошук</button>
         </div>
+
         <div class="user-options">
-            <a href="#">Войти</a>
-            <a href="#">Избранное</a>
-            <a href="#">Корзина</a>
+            <a href="#">Обране <img src="imgs/paw.png" alt="Обране іконка"></a>
+            <a href="#">Кошик <img src="imgs/shopping-basket.png" alt="Корзина іконка"></a>
+            <a href="#">Вхід/Реєстрація <img src="imgs/user.png" alt="Користувач іконка"></a>
         </div>
     </header>
 
-    <!-- Основной баннер -->
+    <!-- Баннер -->
     <section class="main-banner">
         <div class="banner-content">
-            <h2>Большие скидки на товары Samsung</h2>
-            <p>От 33 399₴, получите зарядное устройство в подарок!</p>
-            <button>Подробнее</button>
-        </div>
-        <div class="banner-image">
-            <img src="samsung.png" alt="Samsung">
+            <h2>Час погодувати ваших <br /> пухнастих друзів!</h2>
+            <p>*На всі корми діє знижка 20%! </p>
+            <button>За покупками!</button>
         </div>
     </section>
 
-    <!-- Популярные категории -->
-    <section class="popular-categories">
-        <h2>Популярные категории</h2>
+    <!--категорії -->
+    <section class="main_categories">
+        <h2>Основні категорії</h2>
         <div class="categories-list">
             <div class="category-item">
-                <img src="cat-food.png" alt="Корма для кошек">
-                <p>Корма для кошек</p>
+                <img src="/imgs/cat.jpg" alt="Категорія:коти">
+                <p>>Все для котиків</p>
             </div>
             <div class="category-item">
-                <img src="dog-food.png" alt="Корма для собак">
-                <p>Корма для собак</p>
+                <img src="/imgs/dog.png" alt="Категорія:собаки">
+                <p>>Все для песиків</p>
             </div>
             <div class="category-item">
-                <img src="accessories.png" alt="Аксессуары">
-                <p>Аксессуары</p>
+                <img src="/imgs/hamster.png" alt="Категорія:гризуни">
+                <p>>Все для гризунів</p>
             </div>
             <div class="category-item">
-                <img src="toys.png" alt="Игрушки">
-                <p>Игрушки</p>
+                <img src="/imgs/parrot.png" alt="Категорія:птахи">
+                <p>>Все для пернатих</p>
             </div>
         </div>
     </section>
+    <!-- Акції -->
+    <section class="product-offers">
+        <h4>Акції та пропозиції <button>Всі акції та пропозиції ></button> </h4>
+        <ul class="product-list">
+            <li class="product-item">
+                <div class="product-img">
+                    <img src="imgs/product1.jpg" alt="Акційний товар 1">
+                </div>
+                <div class="product-title">Мазь для лапок</div>
+                <div class="product-discount">-15%</div>
+                <div class="product-price">400 грн</div>
+            </li>
+            <li class="product-item">
+                <div class="product-img">
+                    <img src="imgs/product2.jpg" alt="Акційний товар 2">
+                </div>
+                <div class="product-title">Набір собчаого корму,від 1 до 40 кг</div>
+                <div class="product-discount">-10%</div>
+                <div class="product-price">800 грн</div>
+        </ul>
+    </section>
+
+    <!-- Новинки -->
+    <section class="product-offers">
+        <h4>Новинки<button>Всі новинки ></button> </h4>
+        <ul class="product-list">
+            <li class="product-item">
+                <div class="product-img">
+                    <img src="imgs/Product1.jpg" alt="Новинка 1">
+                </div>
+                <div class="product-title">Puramur Professional Extra Gloss Сироватка для котів і собак</div>
+                <div class="product-price">250 грн</div>
+            </li>
+            <li class="product-item">
+                <div class="product-img">
+                    <img src="imgs/Product2.jpg" alt="Новинка 2">
+                </div>
+                <div class="product-title">Petbed Velor Лежак "Пончик", бежевий</div>
+                <div class="product-price">500 грн</div>
+            </li>
+            <!-- Додаткові новинки -->
+        </ul>
+    </section>
+
+
+
+    <!--Низ -->
+    <footer>
+        <div class="footer-top">
+            <h3>Зв'яжіться з нами!</h3>
+            <p><img src="imgs/phone-icon.png" alt="Іконка телефон"> 068 099 3049</p>
+            <p><img src="imgs/phone-icon.png" alt="Іконка телефон"> 068 555 3535</p>
+            <p><img src="imgs/inst.png" alt="Іконка Інстаграм"> @@happytailUA</p>
+        </div>
+
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>Категорії товарів</h4>
+                <ul>
+                    <li><a href="#">>Собаки</a></li>
+                    <li><a href="#">>Коти</a></li>
+                    <li><a href="#">>Риби</a></li>
+                    <li><a href="#">>Маленькі тварини</a></li>
+                    <li><a href="#">>Рептилії</a></li>
+                    <li><a href="#">>Птахи</a></li>
+                </ul>
+            </div>
+
+
+            <div class="footer-column">
+                <h4>Дізнайтеся більше про нас</h4>
+                <ul>
+                    <li><a href="#">Про нас</a></li>
+                    <li><a href="#">Наші магазини</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Ми можемо допомогти</h4>
+                <ul>
+                    <li><a href="#">Відстежити замовлення</a></li>
+                    <li><a href="#">Повернення та обмін</a></li>
+                    <li><a href="#">Інформація про доставку</a></li>
+                    <li><a href="#">Контакти</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            
+        </div>
+
+      
+    </footer>
+
 
 </body>
 </html>
