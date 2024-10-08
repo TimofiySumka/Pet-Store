@@ -1,53 +1,52 @@
+
 .container {
     width: 100%;
     max-width: 100%;
 }
 
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-    font-family: Comfortaa,Arial, sans-serif;
+html, body {
     margin: 0;
     padding: 0;
+    font-family: Comfortaa, Arial, sans-serif;
     background-color: white;
     color: #333;
 }
 
-
+/* Верхушка */
 header {
+    color: white;
     background-color: #195f70;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    color: white;
 }
+    header a {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+        header a:hover {
+            color: #FF9E03;
+        }
+
+    header nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+
 
 .logo img {
     height: 80px;
 }
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-    nav ul li {
-        margin-left: 20px;
-    }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
+/* Пошук */
 .search-bar {
     width: 45%;
     display: flex;
@@ -70,185 +69,40 @@ nav ul {
         margin-left: 10px;
     }
 
-
-    .user-options a {
-        color: white;
-        text-decoration: none;
-        margin-left: 20px;
-    }
-    .user-options img{
-        height:28px;
-    }
-    /*Баннер*/
-    .main-banner {
-        background-image: url("/imgs/banner.png");
-        background-size: cover;
-        background-position: center;
-        background-color: #E0F7FA;
-
-        display: flex;
-        justify-content: flex-end;
-        padding: 40px 20px;
-    }
-
-    .banner-content {
-        max-width: 70%;
-        text-align: right;
-    }
-
-
-    .banner-content h2 {
-        font-family:Impact;
-        font-size: 56px;
-        color: white;
-        text-align:right;
-
-    }
-
-    .banner-content p {
-        font-size: 18px;
-        color: whitesmoke;
-        text-align: right;
-    }
-
-    .banner-content button {
-        padding: 10px 20px;
-        background-color: #FF9E03;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    /*Категорії*/
-
-    .main_categories {
-    padding: 20px;
-    background-color: white;
-    text-align: center;
-}
-
-    .main_categories h2 {
-
-        font-size: 30px;
-        font-weight:800;
-        color: #333;
-        margin-bottom: 20px;
-    }
-.categories-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0 -10px;
-}
-
-.category-item {
-    flex: 1 1 200px;
-    text-align: center;
-    padding: 10px;
-}
-
-    .category-item img {
-        width: 50%;
-        max-width: 100px;
-        height: auto;
-    }
-
-    .category-item:not(:last-child) {
-        border-right: 1px solid #ccc;
-        padding-right: 20px;
-        margin-right: 20px;
-    }
-
-
-    .category-item p {
-        font-size: 16px;
-        margin-top: 10px;
-    }
-
-/*Товари*/
-.product-list {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding: 0;
-    margin: 0;
-}
-
-.product-item {
-    flex: 0 0 200px;
-    height: 300px;
-    list-style-type: none;
-    margin: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-    .product-item img {
-        width: 100%;
-        max-height: 150px;
-        object-fit: cover;
-    }
-
-.product-title {
-    font-size: 16px;
-    margin-top: 10px;
-    color: #333;
-    height: 40px;
-    overflow: hidden;
-}
-
-.product-price,
-.product-discount {
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-.product-discount {
-    color: red;
-}
-
-.product-offers button {
-    font-size: 14px;
-    padding: 8px 12px;
-    background-color: white;
-    color: black;
-    border: solid;
-    border-width: 2px;
-    border-radius: 9px;
-}
-
-.product-offers button:hover {
-    background-color: #195f70;
+/* Опції */
+.user-options a {
     color: white;
+    text-decoration: none;
+    margin-left: 20px;
 }
 
+.user-options img {
+    height: 28px;
+}
 
-/*Низ*/
+/* Низ */
 footer {
     background-color: #195f70;
     color: white;
-    padding: 5px 20px;
+    padding: 20px;
 }
 
-footer img{
-    width:15%;
-    margin:10px;
-}
+    footer img {
+        width: 15%;
+        margin: 10px;
+    }
+
 .footer-top {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
     padding: 20px 0;
 }
+
     .footer-top p {
         margin: 10px 0;
-        font-size:20px;
+        font-size: 20px;
         display: flex;
         align-items: center;
     }
@@ -257,19 +111,7 @@ footer img{
             margin-right: 10px;
         }
 
-
-
-
-.contact-info span {
-    margin-right: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.contact-info i {
-    margin-right: 10px;
-}
-
+/* Низ (посилання) */
 .footer-links {
     display: flex;
     justify-content: space-between;
@@ -281,27 +123,26 @@ footer img{
     margin-right: 20px;
 }
 
-.footer-column h4 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    font-weight:900;
-}
+    .footer-column h4 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        font-weight: 900;
+    }
 
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-}
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+    }
 
-.footer-column ul li {
-    margin-bottom: 8px;
-}
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
 
-.footer-column ul li a {
-    color: white;
-    text-decoration: none;
-}
+            .footer-column ul li a {
+                color: white;
+                text-decoration: none;
+            }
 
-.footer-column ul li a:hover {
-    text-decoration: underline;
-}
-
+                .footer-column ul li a:hover {
+                    text-decoration: underline;
+                }

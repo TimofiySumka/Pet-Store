@@ -7,8 +7,34 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MySite.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
 </head>
-<body>
+<body >
+    <header>
+        <div class="logo">
+            <a href="/Home/Index"><img src="~/imgs/Logo.png" alt="Логотип магазина" /> </a>
+
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/Home/Index">Головна</a></li>
+                <li><a href="/Home/Cataloge">Каталог</a></li>
+                <li><a href="/Home/About">Про нас</a></li>
+            </ul>
+        </nav>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Я шукаю...">
+            <button>Пошук</button>
+        </div>
+
+        <div class="user-options">
+            <a href="#">Обране <img src="~/imgs/paw.png" alt="Обране іконка"></a>
+            <a href="#">Кошик <img src="~/imgs/shopping-basket.png" alt="Корзина іконка"></a>
+            <a href="#">Вхід/Реєстрація <img src="~/imgs/user.png" alt="Користувач іконка"></a>
+        </div>
+    </header>
    
     <div class="container">
         <main role="main" class="pb-3">
@@ -19,5 +45,48 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <footer>
+        <div class="footer-top">
+            <h3>Зв'яжіться з нами!</h3>
+            <p><img src="~/imgs/phone-icon.png" alt="Іконка телефон"> 068 099 3049</p>
+            <p><img src="~/imgs/phone-icon.png" alt="Іконка телефон"> 068 555 3535</p>
+            <p><img src="~/imgs/inst.png" alt="Іконка Інстаграм"> @@happytailUA</p>
+        </div>
+
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>Категорії товарів</h4>
+                <ul>
+                    <li><a href="#">>Собаки</a></li>
+                    <li><a href="#">>Коти</a></li>
+                    <li><a href="#">>Риби</a></li>
+                    <li><a href="#">>Маленькі тварини</a></li>
+                    <li><a href="#">>Рептилії</a></li>
+                    <li><a href="#">>Птахи</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Дізнайтеся більше про нас</h4>
+                <ul>
+                    <li><a href="#">Про нас</a></li>
+                    <li><a href="#">Наші магазини</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Ми можемо допомогти</h4>
+                <ul>
+                    <li><a href="#">Відстежити замовлення</a></li>
+                    <li><a href="#">Повернення та обмін</a></li>
+                    <li><a href="#">Інформація про доставку</a></li>
+                    <li><a href="#">Контакти</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

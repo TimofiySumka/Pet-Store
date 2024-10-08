@@ -18,12 +18,12 @@ namespace MySite.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Cataloge()
         {
             return View();
         }
 
-        public IActionResult About() //Про нас
+        public IActionResult About()
         {
             return View();
         }
