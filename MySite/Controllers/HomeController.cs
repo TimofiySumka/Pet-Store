@@ -13,6 +13,7 @@ namespace MySite.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
             return View();
@@ -24,6 +25,27 @@ namespace MySite.Controllers
         }
 
         public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Wishlist()
+        {
+            return View();
+        }
+
+
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult Registration()
         {
             return View();
         }

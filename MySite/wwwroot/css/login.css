@@ -1,0 +1,111 @@
+﻿body {
+    background-image: url("/imgs/Log_Back.jpeg");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position:right;
+}
+
+.log-window {
+    max-width: 400px;
+    background:white;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight:700;
+    margin-bottom: 20px;
+}
+
+.log_reg {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.tab a {
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    color: #333;
+    border-bottom: 2px solid transparent;
+}
+
+    .tab a.active {
+        border-bottom: 2px solid green;
+        color: green;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+}
+
+    .password-toggle img {
+        width: 20px;
+        height: 20px;
+    }
+
+small {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #195f70;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .login-btn:hover {
+        background-color: darkgreen;
+    }
+
+.forgot-password {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: green;
+}
+
+    .forgot-password:hover {
+        color: green;
+        text-decoration: underline;
+    }

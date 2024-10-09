@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Реєстрація";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+
+<div class="log-window">
+    <h2>Вперше у нас?</h2>
+
+    <div class="log_reg">
+        <div class="tab">
+            <a href="~/Home/Login">Увійти</a>
+        </div>
+        <div class="tab">
+            <a href="~/Home/Registration" class="active">Зареєструватись</a>
+        </div>
+    </div>
+
+    <form class="login-form">
+
+        <div class="form-group">
+            <label for="name">Ваше ім'я</label>
+            <input type="text" id="name" name="name" placeholder="Ім'я" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Пошта</label>
+            <input type="email" id="email" name="email" placeholder="Ваш Email" required>
+        </div>
+
+         <div class="form-group">
+            <label for="password">Пароль</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Придумайте пароль" required>
+                <button type="button" class="password-toggle">
+                    <img src="~/imgs/eye.png" alt="Іконка-Ока">
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Підтвердіть пароль</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Повторіть ваш пароль" required>
+                <button type="button" class="password-toggle">
+                    <img src="~/imgs/eye.png" alt="Іконка-Ока">
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="login-btn">Зареєструвати мене</button>
+    </form>
+</div>

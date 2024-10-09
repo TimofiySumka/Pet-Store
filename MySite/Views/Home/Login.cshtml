@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Вхід";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+
+<div class="log-window">
+    <h2>З поверненням!</h2>
+
+    <div class="log_reg">
+        <div class="tab">
+            <a href="~/Home/Login" class="active">Увійти</a>
+        </div>
+        <div class="tab">
+            <a href="~/Home/Registration">Зареєструватись</a>
+        </div>
+    </div>
+
+    <form class="login-form">
+        <div class="form-group">
+            <label for="email">Пошта</label>
+            <input type="email" id="email" name="email" placeholder="Email пошта" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Пароль" required>
+                <button type="button" class="password-toggle">
+                    <img src="~/imgs/eye.png" alt="Іконка-Ока">
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="login-btn">Увійти</button>
+    </form>
+
+    <a href="#" class="forgot-password">Забули пароль?</a>
+</div>
