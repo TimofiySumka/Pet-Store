@@ -48,7 +48,7 @@ header {
 }
 /* Пошук */
 .search-bar {
-    width: 45%;
+    width: 42%;
     display: flex;
     justify-content: space-between;
 }
