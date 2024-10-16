@@ -1,0 +1,67 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Реєстрація";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+
+<div class="log-window">
+    <h2>Вперше у нас?</h2>
+
+    <div class="log_reg">
+        <div class="tab">
+            <a href="~/Identity/Account/Login">Увійти</a>
+        </div>
+        <div class="tab">
+            <a href="~/Identity/Account/Register" class="active">Зареєструватись</a>
+        </div>
+    </div>
+
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="login-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+        <div class="form-group">
+            <label asp-for="Input.Name" for="name">Ваше ім'я</label>
+            <input asp-for="Input.Name" id="name" placeholder="Ім'я" required class="form-control" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Email" for="email">Пошта</label>
+            <input asp-for="Input.Email" id="email" placeholder="Ваш Email" required class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Password" for="password">Пароль</label>
+            <div class="password-container">
+                <input asp-for="Input.Password" id="password" placeholder="Придумайте пароль" required class="form-control" />
+                <button type="button" class="password-toggle">
+                    <img src="~/imgs/eye.png" alt="Іконка-Ока">
+                </button>
+            </div>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.ConfirmPassword" for="confirmPassword">Підтвердіть пароль</label>
+            <div class="password-container">
+                <input asp-for="Input.ConfirmPassword" id="confirmPassword" placeholder="Повторіть ваш пароль" required class="form-control" />
+                <button type="button" class="password-toggle">
+                    <img src="~/imgs/eye.png" alt="Іконка-Ока">
+                </button>
+            </div>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <button id="registerSubmit" type="submit" class="login-btn">Зареєструвати мене</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
