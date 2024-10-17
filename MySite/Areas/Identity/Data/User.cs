@@ -10,22 +10,8 @@ namespace MySite.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the User class
 public class User : IdentityUser
 {
-    public int Id { get; set; }
-    [PersonalData]
     [Required]
     [StringLength(100)]
-    public string Username { get; set; }
-
-    [Required]
-    [EmailAddress]
-    [StringLength(100)]
-    public string Email { get; set; }
-
-    [Required]
-    [StringLength(255)]
-    public string Password { get; set; }
-
-    [Required]
-    public string Role { get; set; }
+    public string Name { get; set; }
 }
 
