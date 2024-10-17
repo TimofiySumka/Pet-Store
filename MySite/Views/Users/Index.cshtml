@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MySite.Areas.Identity.Data.User>
+
+<h2>Список користувачів</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ім'я користувача</th>
+            <th>Електронна пошта</th>
+            <th>Пароль</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.PasswordHash</td>
+            </tr>
+        }
+    </tbody>
+</table>

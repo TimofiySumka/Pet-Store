@@ -12,6 +12,8 @@ public class User : IdentityUser
 {
     [Required]
     [StringLength(100)]
-    public string Name { get; set; }
+    public required string Name { get; set; }
+
+
 }
 

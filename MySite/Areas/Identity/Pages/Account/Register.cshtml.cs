@@ -107,8 +107,8 @@ namespace MySite.Areas.Identity.Pages.Account
             {
                 var user = new User
                 {
-                    Name = Input.Name,  // Добавьте присвоение значения поля "Name"
-                    UserName = Input.Email, // Identity требует UserName
+                    Name = Input.Name,
+                    UserName = Input.Email,
                     Email = Input.Email
                 };
 

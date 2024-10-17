@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Обране";
+    ViewData["ActivePage"] = ManageNavPages.Wishlist;
+
+}
+<head>
+    <link rel="stylesheet" href="~/css/wishlist.css">
+</head>
+
+<div class="wishlist-container">
+    <h2>Ваш список обраних товарів</h2>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="wishlist-items">
+            @foreach (var product in Model)
+            {
+                <div class="wishlist-item">
+                    <img src="~/imgs/@product.Image" alt="@product.Name" class="wishlist-item-image" />
+                    <div class="wishlist-item-details">
+                        <h4>@product.Name</h4>
+                        <p>Ціна: @product.Price грн</p>
+                        <p>@product.Description</p>
+                    </div>
+                    <div class="wishlist-item-actions">
+                        <form method="post" asp-action="RemoveFromWishlist" asp-route-id="@product.Id">
+                            <button type="submit" class="remove-btn">Видалити</button>
+                        </form>
+                        <a href="/Products/Details/@product.Id" class="buy-btn">Купити зараз</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Ваш список обраного порожній.</p>
+        <a href="/Home/Cataloge" class="catalog-link">Перейти до каталогу</a>
+    }
+</div>
+

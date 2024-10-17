@@ -7,6 +7,14 @@
     "mssql2": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:MySiteDBContextConnection"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "sqlite1": {
+      "type": "sqlite",
+      "connectionId": "ConnectionStrings:(localdb)::mssqllocaldb",
+      "dynamicId": null
     }
   }
 }
