@@ -12,8 +12,8 @@ using MySite.Data;
 namespace MySite.Migrations.MySiteDB
 {
     [DbContext(typeof(MySiteDBContext))]
-    [Migration("20241019080950_CreateMySiteDB")]
-    partial class CreateMySiteDB
+    [Migration("20241019085839_CreateIdentitySchema")]
+    partial class CreateIdentitySchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
