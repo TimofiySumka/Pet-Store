@@ -11,7 +11,8 @@ builder.Services.AddDbContext<MySiteDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MySiteContext") ??   throw new InvalidOperationException("Connection string 'MySiteContext' not found.")));
 
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MySiteDBContext>();
 
 
@@ -48,4 +49,37 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope()) //Завжди створювати ролі
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roles = new[] { "Admin", "User" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+
+}
+
+using (var scope = app.Services.CreateScope()) // Завжди створювати адміністратора
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    string email = "timofegu.sumka@gmail.com";
+    string name = "Адміністратор";
+    string password = "Aa123123";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var user = new User
+        {
+            UserName = email,
+            Email = email,
+            Name = name
+        };
+        await userManager.CreateAsync(user, password);
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
+}
+
 app.Run();

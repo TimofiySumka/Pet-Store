@@ -25,7 +25,10 @@
             <ul>
                 <li><a href="/Home/Index">Головна</a></li>
                 <li><a href="/Home/Cataloge">Каталог</a></li>
-                <li><a href="/Products">БД</a></li>
+                    @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
+                    {
+                        <a href="/Products">БД</a>
+                    }
                 <li><a href="/Home/About">Про нас</a></li>
             </ul>
         </nav>
