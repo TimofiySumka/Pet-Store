@@ -84,11 +84,9 @@ namespace MySite.Controllers
         }
 
         // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,DiscountPrice,Category,ReleaseDate,Stock,ImageUrl")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,DiscountPercentage,Category,ReleaseDate,Stock,ImageUrl")] Product product)
         {
             if (id != product.Id)
             {
@@ -117,6 +115,7 @@ namespace MySite.Controllers
             }
             return View(product);
         }
+
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)

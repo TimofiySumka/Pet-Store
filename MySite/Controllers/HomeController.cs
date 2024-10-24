@@ -23,10 +23,15 @@ namespace MySite.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Cataloge()
+        public async Task<IActionResult> Cataloge(string searchQuery)
         {
-            var products = await _context.Product.ToListAsync();
-            return View(products);
+            var products = _context.Product.AsQueryable();
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                products = products.Where(p => p.Name.Contains(searchQuery));
+            }
+            var productList = await products.ToListAsync();
+            return View(productList);
         }
 
         public IActionResult About()
