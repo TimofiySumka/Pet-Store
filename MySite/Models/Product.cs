@@ -26,7 +26,6 @@ namespace MySite.Models
 
         [Required]
         public int Stock { get; set; }
-
         public string? ImageUrl { get; set; }
     }
 }

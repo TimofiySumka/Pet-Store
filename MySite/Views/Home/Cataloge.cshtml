@@ -1,2 +1,26 @@
-﻿<!DOCTYPE html>
-<body><h3>Каталог</h3></body>
+﻿@model IEnumerable<MySite.Models.Product>
+
+<h1>Каталог товаров</h1>
+
+@if (Model != null && Model.Any())
+{
+    <div class="product-list">
+        @foreach (var product in Model)
+        {
+            <div class="product-item">
+                <img src="@product.ImageUrl" alt="@product.Name" />
+                <div class="product-title">@product.Name</div>
+                <div class="product-price">@product.Price</div>
+                @if (product.DiscountPrice != null)
+                {
+                    <div class="product-discount">Знижка: @product.DiscountPrice</div>
+                }
+                <button class="buy-button">Купити</button>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Немає товарів для відображения.</p>
+}
