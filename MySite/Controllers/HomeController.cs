@@ -41,6 +41,7 @@ namespace MySite.Controllers
 
         public IActionResult Wishlist()
         {
+
             return View();
         }
 

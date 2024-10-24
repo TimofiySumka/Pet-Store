@@ -1,42 +1,87 @@
 ﻿@model IEnumerable<MySite.Models.Product>
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
-@inject UserManager<MySite.Areas.Identity.Data.User> UserManager
-<h1>Каталог товарів</h1>
 
-@if (Model != null && Model.Any())
-{
+@{
+    ViewData["Title"] = "Каталог товарів";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/сataloge.css">
+</head>
+
+<div class="catalog-container">
+    <!-- Боковая панель фильтров -->
+    <div class="sidebar">
+        <!-- Кнопка "На головну" -->
+        <div style="margin-bottom: 20px;">
+            <a href="~/Home/Index" class="home-button">На головну</a>
+        </div>
+
+        <h3>Фільтри</h3>
+        <div class="filter-section">
+            <label class="filter-title">Ціна:</label>
+            <input type="range" min="0" max="168363" value="0" id="priceRange">
+            <span id="priceValue">0 - 168363</span>
+        </div>
+        <div class="filter-section">
+            <label class="filter-title">
+                <input type="checkbox" id="inStock"> В наявності
+            </label>
+        </div>
+        <div class="filter-section">
+            <h4 class="filter-title">Бренд:</h4>
+            <input type="text" class="brand-search" placeholder="Пошук по списку...">
+            <ul class="brand-list">
+                <li><label><input type="checkbox"> Bronzedog</label></li>
+                <li><label><input type="checkbox"> Ferplast</label></li>
+                <li><label><input type="checkbox"> Barksi</label></li>
+                <li><label><input type="checkbox"> Природа</label></li>
+            </ul>
+        </div>
+    </div>
+
     <div class="product-list">
-        @foreach (var product in Model)
+        @if (Model != null && Model.Any())
         {
-            <div class="product-item">
-                <img src="@product.ImageUrl" alt="@product.Name" />
-                <div class="product-title">@product.Name</div>
+            foreach (var product in Model)
+            {
+                <div class="product-item">
+                    <img src="@product.ImageUrl" alt="@product.Name">
+                    <div class="product-title">@product.Name</div>
 
-                @if (product.DiscountPercentage > 0)
-                {
-                    <div class="product-discount">
-                        <span class="product-discount">Знижка: @product.DiscountPercentage%</span>
+
+                    <div class="product-availability">
+                        @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
                     </div>
-                    <div class="product-price">
-                        <span ><del>@product.Price.ToString("0.00") ₴</del></span>
-                        <span>@product.DiscountPrice.Value.ToString("0.00") ₴</span>
-                    </div>
-                }
-                else
-                {
-                    <div class="product-price">@product.Price.ToString("0.00") ₴</div>
-                }
-                @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
-                {
-                    <button class="buy-button">Редагувати</button>
-                }
-                <button class="buy-button">Купити</button>
-            </div>
+
+                    @if (product.DiscountPercentage > 0)
+                    {
+                        <div class="product-price">
+                            <span>Ціна: <del>@product.Price.ToString("0.00") ₴</del></span>
+                            <span class="product-discount">@product.DiscountPrice.Value.ToString("0.00") ₴</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product-price">
+                            <span>Ціна: @product.Price.ToString("0.00") ₴</span>
+                        </div>
+                    }
+
+                    <button class="buy-button">Купити</button>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Немає товарів для відображення.</p>
         }
     </div>
-}
-else
-{
-    <p>Немає товарів для відображення.</p>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("priceRange").addEventListener("input", function () {
+            document.getElementById("priceValue").innerText = this.value + " - " + this.max;
+        });
+    </script>
 }

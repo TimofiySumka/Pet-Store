@@ -48,25 +48,35 @@ header {
 }
 /* Пошук */
 .search-bar {
-    width: 40%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1; /* Заставляем панель занимать доступное пространство */
+    margin: 0 12px; /* Отступы слева и справа для визуального оформления */
 }
 
-    .search-bar input {
+    .search-bar form {
+        display: flex;
         width: 100%;
-        padding: 6px;
-        border-radius: 9px;
-        border: 2px solid #ccc;
+    }
+
+    .search-bar input {
+        flex-grow: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+        box-sizing: border-box;
+
     }
 
     .search-bar button {
-        padding: 8px 12px;
+        padding: 10px 20px;
         background-color: #149EF2;
         color: white;
         border: none;
-        border-radius: 9px;
-        margin-left: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        white-space: nowrap;
     }
 
 /* Опції */
@@ -123,7 +133,7 @@ footer {
 
 .product-item {
     flex: 0 0 250px;
-    height: 350px; 
+    height: 370px; 
     list-style-type: none;
     margin: 10px;
     padding: 10px;
@@ -159,22 +169,40 @@ footer {
     }
 
 .product-title {
-    font-size: 16px;
+    font-size: 19px;
     margin-top: 10px;
     color: #333;
     height: 40px;
     overflow: hidden;
 }
 
-.product-price,
-.product-discount {
-    font-size: 14px;
+
+
+.product-price {
+    font-size: 17px;
+    color: black;
+    text-align: left;
+    margin-top: 5px;
+}
+
+    .product-price del {
+        color: #888; 
+    }
+
+.product-availability {
+    font-size: 17px;
+    color: black;
+    text-align: left;
     margin-top: 5px;
 }
 
 .product-discount {
+    font-size: 16px;
+    text-align: left;
+    margin-top: 5px;
     color: red;
 }
+
 /* Низ (посилання) */
 .footer-links {
     display: flex;

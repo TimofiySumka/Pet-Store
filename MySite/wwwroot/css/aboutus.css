@@ -1,0 +1,52 @@
+﻿.about-us-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .about-us-container h1 {
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+.contact-section, .phone-section, .email-section {
+    margin-bottom: 20px;
+}
+
+    .contact-section h2, .phone-section h2, .email-section h2 {
+        font-size: 24px;
+        color: #195f70;
+    }
+
+.working-hours, .phone-numbers {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+    .working-hours li, .phone-numbers li {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+.leave-request-link {
+    color: #149EF2;
+    text-decoration: underline;
+}
+
+    .leave-request-link:hover {
+        color: #0c82c1;
+    }
+
+.email-section a {
+    color: #149EF2;
+    text-decoration: none;
+}
+
+    .email-section a:hover {
+        text-decoration: underline;
+    }

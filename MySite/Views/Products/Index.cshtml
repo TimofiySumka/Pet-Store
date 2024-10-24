@@ -4,10 +4,10 @@
     ViewData["Title"] = "Панель управління товарами";
 }
 
-<h1>Index</h1>
+<h1>Панель управління товарами</h1>
 
 <p>
-    <a asp-action="Create">Додати товар</a>
+    <a asp-action="Create" class="btn btn-success">Додати товар</a>
 </p>
 <table class="table">
     <thead>
@@ -19,13 +19,13 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                Price
+                Ціна
             </th>
             <th>
-                Discount
+                Знижка
             </th>
             <th>
-                Discounted Price
+                Ціна зі знижкою
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
@@ -39,7 +39,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
             </th>
-            <th></th>
+            <th>Дії</th>
         </tr>
     </thead>
     <tbody>
@@ -88,9 +88,9 @@
                     @Html.DisplayFor(modelItem => item.ImageUrl)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редагувати</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Деталі</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Видалити</a>
                 </td>
             </tr>
         }
