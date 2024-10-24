@@ -1,2 +1,42 @@
-﻿<!DOCTYPE html>
-<body><h3>Каталог</h3></body>
+﻿@model IEnumerable<MySite.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
+@inject UserManager<MySite.Areas.Identity.Data.User> UserManager
+<h1>Каталог товарів</h1>
+
+@if (Model != null && Model.Any())
+{
+    <div class="product-list">
+        @foreach (var product in Model)
+        {
+            <div class="product-item">
+                <img src="@product.ImageUrl" alt="@product.Name" />
+                <div class="product-title">@product.Name</div>
+
+                @if (product.DiscountPercentage > 0)
+                {
+                    <div class="product-discount">
+                        <span class="product-discount">Знижка: @product.DiscountPercentage%</span>
+                    </div>
+                    <div class="product-price">
+                        <span ><del>@product.Price.ToString("0.00") ₴</del></span>
+                        <span>@product.DiscountPrice.Value.ToString("0.00") ₴</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="product-price">@product.Price.ToString("0.00") ₴</div>
+                }
+                @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
+                {
+                    <button class="buy-button">Редагувати</button>
+                }
+                <button class="buy-button">Купити</button>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Немає товарів для відображення.</p>
+}

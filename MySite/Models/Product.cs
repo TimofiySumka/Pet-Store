@@ -10,13 +10,23 @@ namespace MySite.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        [StringLength(255)]
         public string Description { get; set; }
 
         [Required]
         public decimal Price { get; set; }
 
-        public decimal? DiscountPrice { get; set; }
+        public int DiscountPercentage { get; set; }
+        public decimal? DiscountPrice
+        {
+            get
+            {
+                if (DiscountPercentage > 0)
+                {
+                    return Price - (Price * DiscountPercentage / 100);
+                }
+                return null;
+            }
+        }
 
         [StringLength(100)]
         public string Category { get; set; }
@@ -26,7 +36,6 @@ namespace MySite.Models
 
         [Required]
         public int Stock { get; set; }
-
         public string? ImageUrl { get; set; }
     }
 }

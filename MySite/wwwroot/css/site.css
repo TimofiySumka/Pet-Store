@@ -48,7 +48,7 @@ header {
 }
 /* Пошук */
 .search-bar {
-    width: 42%;
+    width: 40%;
     display: flex;
     justify-content: space-between;
 }
@@ -111,6 +111,70 @@ footer {
             margin-right: 10px;
         }
 
+
+.product-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+.product-item {
+    flex: 0 0 250px;
+    height: 350px; 
+    list-style-type: none;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .product-item img {
+        width: 100%;
+        max-height: 150px;
+        object-fit: cover;
+    }
+
+.buy-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #149EF2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: auto;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+    .buy-button:hover {
+        background-color: seagreen;
+    }
+
+.product-title {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #333;
+    height: 40px;
+    overflow: hidden;
+}
+
+.product-price,
+.product-discount {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.product-discount {
+    color: red;
+}
 /* Низ (посилання) */
 .footer-links {
     display: flex;

@@ -25,19 +25,25 @@
             <ul>
                 <li><a href="/Home/Index">Головна</a></li>
                 <li><a href="/Home/Cataloge">Каталог</a></li>
-                <li><a href="/Products">БД</a></li>
+                    @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
+                    {
+                        <a href="/Products">БД</a>
+                    }
                 <li><a href="/Home/About">Про нас</a></li>
             </ul>
         </nav>
         </div>
 
         <div class="search-bar">
-            <input type="text" placeholder="Я шукаю...">
-            <button>Пошук</button>
+            <!--<form asp-controller="Home" asp-action="Cataloge" method="get">-->
+                <input type="text" name="searchQuery" placeholder="Я шукаю..." />
+                <button type="submit">Пошук</button>
+
+                <!--</form>-->
         </div>
 
         <div class="user-options">
-            <a href="/Identity/Account/Manage/Wishlist">Обране <img src="~/imgs/paw.png" alt="Обране іконка"></a>
+            <a href="/Home/Wishlist">Обране <img src="~/imgs/paw.png" alt="Обране іконка"></a>
             <a href="/Home/Cart">Кошик <img src="~/imgs/shopping-basket.png" alt="Корзина іконка"></a>
 
             @if (SignInManager.IsSignedIn(User))

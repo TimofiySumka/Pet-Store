@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MySite.Models;
+using MySite.Data;
 using System.Diagnostics;
 
 namespace MySite.Controllers
@@ -7,10 +9,12 @@ namespace MySite.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly MySiteContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MySiteContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
 
@@ -19,9 +23,15 @@ namespace MySite.Controllers
             return View();
         }
 
-        public IActionResult Cataloge()
+        public async Task<IActionResult> Cataloge(string searchQuery)
         {
-            return View();
+            var products = _context.Product.AsQueryable();
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                products = products.Where(p => p.Name.Contains(searchQuery));
+            }
+            var productList = await products.ToListAsync();
+            return View(productList);
         }
 
         public IActionResult About()
