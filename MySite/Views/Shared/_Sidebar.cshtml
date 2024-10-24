@@ -1,0 +1,28 @@
+﻿<div class="sidebar">
+    <ul class="sidebar-menu">
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Manage" ? "active" : "")">
+            <a href="~/Identity/Account/Manage">Профіль</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Email" ? "active" : "")">
+            <a href="~/Identity/Account/Manage/Email">Електронна пошта</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "ChangePassword" ? "active" : "")">
+            <a href="~/Identity/Account/Manage/ChangePassword">Пароль</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "TwoFactorAuthentication" ? "active" : "")">
+            <a href="~/Identity/Account/Manage/TwoFactorAuthentication">Двофакторна аутентифікація</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "PersonalData" ? "active" : "")">
+            <a href="~/Identity/Account/Manage/PersonalData">Особисті дані</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Wishlist" ? "active" : "")">
+            <a href="~/Home/Wishlist">Список бажаного</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Cart" ? "active" : "")">
+            <a href="~/Home/Cart">Кошик</a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Logout" ? "active" : "")">
+            <a href="~/Identity/Account/Manage">Вийти</a>
+        </li>
+    </ul>
+</div>

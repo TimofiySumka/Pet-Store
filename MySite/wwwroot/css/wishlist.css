@@ -1,43 +1,55 @@
-﻿
+﻿/* Расширение контейнера на всю ширину страницы */
 .wishlist-container {
-    max-width: 1200px;
-    margin: 20px auto;
+    flex-grow: 1;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Устанавливаем ширину на 100% */
+    margin: 0 auto;
+}
+
+/* Центрирование заголовка */
+.centered-title {
     text-align: center;
+    width: 100%;
+    margin: 0 auto;
 }
 
-h1 {
-    font-size: 28px;
-    color: #195f70;
-    margin-bottom: 20px;
+/* Выровнять по правому краю */
+.right-align {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px;
 }
 
-.btn-back {
-    background-color: #149EF2;
+/* Центрирование сообщения о пустом списке */
+.empty-list-message {
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Стиль для кнопки "Купити все" */
+.btn-buy-all {
+    padding: 10px 20px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* Количество товаров */
+.item-count {
+    font-size: 16px;
+    color: #777;
+    margin-left: 10px;
+}
+
+/* Информационный раздел */
+.info-section {
     margin-bottom: 20px;
-}
-
-    .btn-back:hover {
-        background-color: #0c82c1;
-    }
-
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.empty-list-message {
-    font-size: 18px;
-    color: #888;
+    text-align: right; /* Выровнять по правому краю */
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using MySite.Areas.Identity.Data;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MySite.Controllers
 {
@@ -15,6 +16,7 @@ namespace MySite.Controllers
         }
 
         // GET: /Users
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var users = _userManager.Users;

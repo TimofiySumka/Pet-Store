@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Кошик";
 }
+<head>
+    <link rel="stylesheet" href="~/css/sidebar.css">
+    <link rel="stylesheet" href="~/css/cart.css">
+</head>
+
+<body>
+    <div class="profile-container">
+        @Html.Partial("_Sidebar")
+
+        <div class="cart-container">
+            <div class="header">
+                <h1 class="centered-title">Ваш кошик</h1>
+            </div>
+
+            <div class="info-section right-align">
+                <button class="btn-buy-all">Купити все</button>
+                <p class="item-count">Кількість товарів: 0</p>
+            </div>
+
+            <div class="empty-cart-message-container">
+                <p class="empty-cart-message">На жаль, Ваш кошик порожній. Перейдіть на головну сторінку для оформлення замовлення.</p>
+                <a href="~/Home/Index" class="btn-home">Перейти на головну</a>
+            </div>
+
+            <div class="product-list">
+            </div>
+        </div>
+    </div>
+
+
+
+</body>

@@ -1,0 +1,36 @@
+﻿.profile-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 20px; /* Добавляем отступ справа */
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+    .sidebar-menu li {
+        margin-bottom: 10px;
+    }
+
+        .sidebar-menu li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+            .sidebar-menu li a:hover {
+                color: #149EF2;
+            }
+
+    .sidebar-menu .active a {
+        color: #149EF2;
+    }

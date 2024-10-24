@@ -1,2 +1,71 @@
-﻿body {
+﻿/* Расширение контейнера корзины на всю ширину страницы */
+.cart-container {
+    flex-grow: 1;
+    padding: 20px;
+    width: 100%; /* Устанавливаем ширину на 100% */
+    margin: 0 auto;
+}
+
+/* Центрирование заголовка */
+.centered-title {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Выровнять по правому краю */
+.right-align {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+/* Убрать фон вокруг сообщения о пустой корзине */
+.empty-cart-message-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Стиль сообщения о пустой корзине */
+.empty-cart-message {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Кнопка для перехода на главную */
+.btn-home {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e0e0e0;
+    color: #555;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* Кнопка "Купити все" */
+.btn-buy-all {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Количество товаров */
+.item-count {
+    font-size: 16px;
+    color: #777;
+    margin-left: 10px;
+}
+
+/* Информационный раздел */
+.info-section {
+    margin-bottom: 20px;
+    text-align: right; /* Выровнять по правому краю */
 }

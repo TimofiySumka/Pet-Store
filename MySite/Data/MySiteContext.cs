@@ -15,5 +15,6 @@ namespace MySite.Data
         }
 
         public DbSet<MySite.Models.Product> Product { get; set; } = default!;
+        public DbSet<Category> Category { get; set; } = default!;
     }
 }

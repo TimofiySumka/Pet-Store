@@ -41,45 +41,8 @@
 
 
 
-.product-list {
-    width: 75%; /* Ширина списка товаров */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start; /* Выравнивание плиток в начале */
-}
 
-..product-item {
-    flex: 0 1 calc(25% - 20px); /* Фиксируем ширину плиток на четверть контейнера */
-    max-width: calc(25% - 20px); /* Максимальная ширина плиток */
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    text-align: center;
-    position: relative;
-    height: 350px; /* Увеличиваем высоту плитки */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Размещаем содержимое равномерно */
-}
 
-.product-item img {
-    max-height: 180px; /* Увеличиваем высоту изображения */
-    width: auto;
-    object-fit: contain; /* Сохраняем пропорции изображения */
-    margin-bottom: 10px;
-}
-
-.product-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; /* Запрещаем перенос текста */
-}
 
 .buy-button {
     width: 100%;

@@ -2,18 +2,28 @@
     ViewData["Title"] = "Обране";
 }
 <head>
+    <link rel="stylesheet" href="~/css/sidebar.css">
     <link rel="stylesheet" href="~/css/wishlist.css">
 </head>
 
 <body>
-    <div class="wishlist-container">
-        <h1>Список улюбленого</h1>
-        <button class="btn-back" href="~/Home">Назад</button>
-        <p>Кількість товарів: 0</p>
+    <div class="profile-container">
+        @Html.Partial("_Sidebar")
 
-        <div class="product-list">
-            <p class="empty-list-message">Ваш список улюбленого порожній.</p>
+        <div class="wishlist-container">
+            <div class="header">
+                <h1 class="centered-title">Список улюбленого</h1>
+            </div>
+
+            <div class="info-section">
+                <div class="actions right-align">
+                    <button class="btn-buy-all">Купити все</button>
+                    <p class="item-count">Кількість товарів: 0</p>
+                </div>
+            </div>
+
+            <p class="empty-list-message">Ваш список улюбленого порожній</p>
         </div>
+
     </div>
 </body>
-
