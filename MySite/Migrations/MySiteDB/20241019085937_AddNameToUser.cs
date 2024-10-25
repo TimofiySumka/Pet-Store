@@ -4,6 +4,12 @@
 
 namespace MySite.Migrations.MySiteDB
 {
+    
+    
+    
+    
+    
+    
     /// <inheritdoc />
     public partial class AddNameToUser : Migration
     {

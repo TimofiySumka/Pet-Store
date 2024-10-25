@@ -1,19 +1,16 @@
-﻿/* Расширение контейнера на всю ширину страницы */
-.wishlist-container {
+﻿.wishlist-container {
     flex-grow: 1;
     padding: 20px;
-    width: 100%; /* Устанавливаем ширину на 100% */
+    width: 100%; 
     margin: 0 auto;
 }
 
-/* Центрирование заголовка */
 .centered-title {
     text-align: center;
     width: 100%;
     margin: 0 auto;
 }
 
-/* Выровнять по правому краю */
 .right-align {
     display: flex;
     justify-content: flex-end;
@@ -22,7 +19,6 @@
     margin-right: 20px;
 }
 
-/* Центрирование сообщения о пустом списке */
 .empty-list-message {
     font-size: 24px;
     font-weight: bold;
@@ -31,7 +27,6 @@
     margin-top: 30px;
 }
 
-/* Стиль для кнопки "Купити все" */
 .btn-buy-all {
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -41,15 +36,13 @@
     cursor: pointer;
 }
 
-/* Количество товаров */
 .item-count {
     font-size: 16px;
     color: #777;
     margin-left: 10px;
 }
 
-/* Информационный раздел */
 .info-section {
     margin-bottom: 20px;
-    text-align: right; /* Выровнять по правому краю */
+    text-align: right;
 }

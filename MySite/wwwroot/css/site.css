@@ -144,7 +144,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 350px; /* «адайте минимальную высоту, вместо фиксированной */
+    min-height: 350px;
 }
 
     .product-item img {
@@ -165,7 +165,7 @@ footer {
     text-overflow: ellipsis;
     width: 100%;
     display: block;
-    flex-grow: 1; /* ѕозвол€ет заголовку занимать оставшеес€ пространство */
+    flex-grow: 1;
 }
 
 

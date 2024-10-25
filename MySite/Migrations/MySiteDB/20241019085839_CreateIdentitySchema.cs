@@ -5,6 +5,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MySite.Migrations.MySiteDB
 {
+    
+    
+    
+    
+    
+    
+    
     /// <inheritdoc />
     public partial class CreateIdentitySchema : Migration
     {
