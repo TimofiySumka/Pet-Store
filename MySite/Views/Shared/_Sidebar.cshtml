@@ -1,4 +1,8 @@
-﻿<div class="sidebar">
+﻿<head>
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+</head>
+
+<div class="sidebar">
     <ul class="sidebar-menu">
         <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Manage" ? "active" : "")">
             <a href="~/Identity/Account/Manage">Профіль</a>

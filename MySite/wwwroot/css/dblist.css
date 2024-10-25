@@ -1,0 +1,15 @@
+﻿.db-list {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+    .db-list .nav-link {
+        color: #333;
+        margin-right: 15px;
+    }
+
+        .db-list .nav-link:hover {
+            background-color: #ddd;
+        }

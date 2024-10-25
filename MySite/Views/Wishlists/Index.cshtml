@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MySite.Models.Wishlist>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Панель управління списком улюбленого";
 }
 
-<h1>Index</h1>
-
+<h1>Панель управління списком улюбленого</h1>
+@await Html.PartialAsync("_DBList")
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Додати у улюблене</a>
 </p>
 <table class="table">
     <thead>

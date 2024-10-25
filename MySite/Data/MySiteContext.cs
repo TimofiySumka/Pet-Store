@@ -16,6 +16,8 @@ namespace MySite.Data
 
         public DbSet<MySite.Models.Product> Product { get; set; } = default!;
         public DbSet<Category> Category { get; set; } = default!;
-        public DbSet<MySite.Models.Wishlist> Wishlist { get; set; } = default!;
+        public DbSet<Wishlist> Wishlist { get; set; } = default!;
+        public DbSet<Cart> Carts { get; set; } = default!;
+        public DbSet<CartItem> CartItems { get; set; } = default!;
     }
 }

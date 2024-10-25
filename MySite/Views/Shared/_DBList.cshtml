@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Список баз даних";
+}
+<head>
+    <link rel="stylesheet" href="~/css/dblist.css" asp-append-version="true" />
+</head>
+
+<div class="db-list">
+    <ul class="nav nav-pills flex-row">
+        <li class="nav-item">
+            <a asp-controller="Products" asp-action="Index" class="nav-link">Товари</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Users" asp-action="Index" class="nav-link">Користувачі</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Wishlists" asp-action="Index" class="nav-link">Список бажаного</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Categories" asp-action="Index" class="nav-link">Категорії</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Carts" asp-action="Index" class="nav-link">Кошики</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="CartItems" asp-action="Index" class="nav-link">Елементи кошика</a>
+        </li>
+    </ul>
+</div>

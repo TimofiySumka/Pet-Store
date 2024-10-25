@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MySite.Areas.Identity.Data.User>
 
 <h2>Список користувачів</h2>
-
+@await Html.PartialAsync("_DBList")
 <table class="table">
     <thead>
         <tr>
