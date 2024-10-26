@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<MySite.Models.Category>
 
 @{
-    ViewData["Title"] = "Панель управління категоріями";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Панель управління категоріями</h1>
-@await Html.PartialAsync("_DBList")
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Додати категорію</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
