@@ -9,6 +9,6 @@ namespace MySite.Models
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
-
+        public ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }

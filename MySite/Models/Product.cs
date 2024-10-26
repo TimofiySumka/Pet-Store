@@ -28,8 +28,7 @@ namespace MySite.Models
             }
         }
 
-        [StringLength(100)]
-        public string Category { get; set; }
+
 
 
         [DataType(DataType.Date)]
@@ -38,5 +37,7 @@ namespace MySite.Models
         [Required]
         public int Stock { get; set; }
         public string? ImageUrl { get; set; }
+        public ICollection<ProductCategory> ProductCategories { get; set; }
+
     }
 }
