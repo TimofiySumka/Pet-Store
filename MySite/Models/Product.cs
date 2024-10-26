@@ -31,6 +31,7 @@ namespace MySite.Models
         [StringLength(100)]
         public string Category { get; set; }
 
+
         [DataType(DataType.Date)]
         public DateTime? ReleaseDate { get; set; }
 
