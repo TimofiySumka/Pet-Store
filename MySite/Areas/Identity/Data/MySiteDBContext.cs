@@ -13,6 +13,10 @@ public class MySiteDBContext : IdentityDbContext<User>
         : base(options)
     {
     }
+    public DbSet<Product> Product { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -22,5 +26,15 @@ public class MySiteDBContext : IdentityDbContext<User>
         // Add your customizations after calling base.OnModelCreating(builder);
         builder.Entity<ProductCategory>()
             .HasKey(pc => new { pc.ProductId, pc.CategoryId });
+
+        builder.Entity<ProductCategory>()
+            .HasOne(pc => pc.Product)
+            .WithMany(p => p.ProductCategories)
+            .HasForeignKey(pc => pc.ProductId);
+
+        builder.Entity<ProductCategory>()
+            .HasOne(pc => pc.Category)
+            .WithMany(c => c.ProductCategories)
+            .HasForeignKey(pc => pc.CategoryId);
     }
 }

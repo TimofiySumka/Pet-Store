@@ -38,6 +38,8 @@ namespace MySite.Models
         public int Stock { get; set; }
         public string? ImageUrl { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
+        public List<int> SelectedCategoryIds { get; set; } = new List<int>();
+
 
     }
 }
