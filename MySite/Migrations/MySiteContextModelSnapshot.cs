@@ -188,21 +188,6 @@ namespace MySite.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("MySite.Models.ProductCategory", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ProductCategory");
-                });
-
             modelBuilder.Entity("MySite.Models.Wishlist", b =>
                 {
                     b.Property<int>("Id")
@@ -252,38 +237,9 @@ namespace MySite.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("MySite.Models.ProductCategory", b =>
-                {
-                    b.HasOne("MySite.Models.Category", "Category")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MySite.Models.Product", "Product")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("MySite.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
-                });
-
-            modelBuilder.Entity("MySite.Models.Category", b =>
-                {
-                    b.Navigation("ProductCategories");
-                });
-
-            modelBuilder.Entity("MySite.Models.Product", b =>
-                {
-                    b.Navigation("ProductCategories");
                 });
 #pragma warning restore 612, 618
         }

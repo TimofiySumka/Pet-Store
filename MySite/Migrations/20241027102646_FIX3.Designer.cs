@@ -12,8 +12,8 @@ using MySite.Data;
 namespace MySite.Migrations
 {
     [DbContext(typeof(MySiteContext))]
-    [Migration("20241027100648_FixProductCategoryKey")]
-    partial class FixProductCategoryKey
+    [Migration("20241027102646_FIX3")]
+    partial class FIX3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,6 +197,9 @@ namespace MySite.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId", "CategoryId");

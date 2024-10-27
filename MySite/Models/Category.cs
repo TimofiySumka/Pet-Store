@@ -8,6 +8,5 @@ namespace MySite.Models
 
         [Required]
         public string Name { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }

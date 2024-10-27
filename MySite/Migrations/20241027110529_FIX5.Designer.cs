@@ -12,8 +12,8 @@ using MySite.Data;
 namespace MySite.Migrations
 {
     [DbContext(typeof(MySiteContext))]
-    [Migration("20241027094158_CategoryRecreate")]
-    partial class CategoryRecreate
+    [Migration("20241027110529_FIX5")]
+    partial class FIX5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,23 +193,18 @@ namespace MySite.Migrations
 
             modelBuilder.Entity("MySite.Models.ProductCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductCategory");
                 });

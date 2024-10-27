@@ -11,7 +11,6 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
-            <!-- Обратите внимание на enctype -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -48,6 +47,10 @@
                 <label>Фото товару</label>
                 <input type="file" name="ImageFile" class="form-control" />
                 <p>Поточне зображення: <img src="@Model.ImageUrl" alt="@Model.Name" style="max-width: 100px; max-height: 100px;" /></p>
+            </div>
+            <div class="form-group">
+                <label>Категорії</label>
+                <select asp-for="SelectedCategoryIds" asp-items="ViewBag.Categories" class="form-control" multiple="multiple"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Зберегти" class="btn btn-primary" />

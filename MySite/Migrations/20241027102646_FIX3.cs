@@ -5,7 +5,7 @@
 namespace MySite.Migrations
 {
     /// <inheritdoc />
-    public partial class PRCTGCreated : Migration
+    public partial class FIX3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

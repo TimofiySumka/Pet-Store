@@ -12,8 +12,8 @@ using MySite.Data;
 namespace MySite.Migrations
 {
     [DbContext(typeof(MySiteContext))]
-    [Migration("20241025092546_CartDB")]
-    partial class CartDB
+    [Migration("20241027142624_dbdelete")]
+    partial class dbdelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,18 +135,17 @@ namespace MySite.Migrations
 
             modelBuilder.Entity("MySite.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Category");
                 });
@@ -158,11 +157,6 @@ namespace MySite.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -184,6 +178,10 @@ namespace MySite.Migrations
 
                     b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SelectedCategoryIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");

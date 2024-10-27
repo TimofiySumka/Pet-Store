@@ -15,7 +15,6 @@ public class MySiteDBContext : IdentityDbContext<User>
     }
     public DbSet<Product> Product { get; set; }
     public DbSet<Category> Categories { get; set; }
-    public DbSet<ProductCategory> ProductCategories { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)

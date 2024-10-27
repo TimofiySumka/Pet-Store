@@ -10,6 +10,7 @@ namespace MySite.Models
         [StringLength(100)]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         [Required]
@@ -29,15 +30,12 @@ namespace MySite.Models
         }
 
 
-
-
         [DataType(DataType.Date)]
         public DateTime? ReleaseDate { get; set; }
 
         [Required]
         public int Stock { get; set; }
         public string? ImageUrl { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
         public List<int> SelectedCategoryIds { get; set; } = new List<int>();
 
 

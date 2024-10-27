@@ -5,7 +5,7 @@
 namespace MySite.Migrations
 {
     /// <inheritdoc />
-    public partial class CategoryDB : Migration
+    public partial class FIX : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

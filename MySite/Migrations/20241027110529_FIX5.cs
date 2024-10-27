@@ -5,7 +5,7 @@
 namespace MySite.Migrations
 {
     /// <inheritdoc />
-    public partial class DiscountFix2 : Migration
+    public partial class FIX5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

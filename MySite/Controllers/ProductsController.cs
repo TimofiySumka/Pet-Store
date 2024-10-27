@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MySite.Data;
 using MySite.Models;
@@ -42,13 +43,14 @@ public class ProductsController : Controller
     // GET: Products/Create
     public IActionResult Create()
     {
+        ViewBag.Categories = new MultiSelectList(_context.Category, "CategoryId", "Name");
         return View();
     }
 
     // POST: Products/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,DiscountPercentage,Category,ReleaseDate,Stock")] Product product, IFormFile ImageFile)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,DiscountPercentage,ReleaseDate,Stock,SelectedCategoryIds")] Product product, IFormFile ImageFile)
     {
         if (ModelState.IsValid)
         {
@@ -73,8 +75,12 @@ public class ProductsController : Controller
 
             _context.Add(product);
             await _context.SaveChangesAsync();
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+        ViewBag.Categories = new MultiSelectList(_context.Category, "CategoryId", "Name");
         return View(product);
     }
 
@@ -86,18 +92,23 @@ public class ProductsController : Controller
             return NotFound();
         }
 
-        var product = await _context.Product.FindAsync(id);
+        var product = await _context.Product
+            .FirstOrDefaultAsync(p => p.Id == id);
+
         if (product == null)
         {
             return NotFound();
         }
+
+        ViewBag.Categories = new MultiSelectList(_context.Category, "CategoryId", "Name", product.SelectedCategoryIds);
+
         return View(product);
     }
 
     // POST: Products/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,DiscountPercentage,Category,ReleaseDate,Stock,ImageUrl")] Product product, IFormFile ImageFile)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,DiscountPercentage,ReleaseDate,Stock,ImageUrl,SelectedCategoryIds")] Product product, IFormFile ImageFile)
     {
         if (id != product.Id)
         {
@@ -143,6 +154,7 @@ public class ProductsController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+        ViewBag.Categories = new MultiSelectList(_context.Category, "CategoryId", "Name", product.SelectedCategoryIds);
         return View(product);
     }
 
