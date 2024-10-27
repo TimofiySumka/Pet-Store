@@ -37,7 +37,7 @@ namespace MySite.Controllers
             var productCategory = await _context.ProductCategory
                 .Include(p => p.Category)
                 .Include(p => p.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ProductId == id);
             if (productCategory == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace MySite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductId,CategoryId")] ProductCategory productCategory)
+        public async Task<IActionResult> Create([Bind("ProductId,CategoryId")] ProductCategory productCategory)
         {
             if (ModelState.IsValid)
             {
@@ -95,9 +95,9 @@ namespace MySite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,CategoryId")] ProductCategory productCategory)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,CategoryId")] ProductCategory productCategory)
         {
-            if (id != productCategory.Id)
+            if (id != productCategory.ProductId)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace MySite.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductCategoryExists(productCategory.Id))
+                    if (!ProductCategoryExists(productCategory.ProductId))
                     {
                         return NotFound();
                     }
@@ -138,7 +138,7 @@ namespace MySite.Controllers
             var productCategory = await _context.ProductCategory
                 .Include(p => p.Category)
                 .Include(p => p.Product)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ProductId == id);
             if (productCategory == null)
             {
                 return NotFound();
@@ -164,7 +164,7 @@ namespace MySite.Controllers
 
         private bool ProductCategoryExists(int id)
         {
-            return _context.ProductCategory.Any(e => e.Id == id);
+            return _context.ProductCategory.Any(e => e.ProductId == id);
         }
     }
 }
