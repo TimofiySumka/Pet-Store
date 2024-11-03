@@ -24,9 +24,18 @@ namespace MySite.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.ProductWeight)
+                .HasColumnType("decimal(18,2)");
+
         }
+        public DbSet<MySite.Models.Brand> Brand { get; set; } = default!;
+        public DbSet<MySite.Models.AnimalType> AnimalType { get; set; } = default!;
 
 
     }

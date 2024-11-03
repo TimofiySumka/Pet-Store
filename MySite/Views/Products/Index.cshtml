@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MySite.Models.Product>
 
 @{
-    ViewData["Title"] = "Панель управління товарами";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Панель управління товарами</h1>
-@await Html.PartialAsync("_DBList")
+<h1>Index</h1>
+
 <p>
-    <a asp-action="Create" class="btn btn-success">Додати товар</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -19,16 +19,10 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                Ціна
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                Знижка
-            </th>
-            <th>
-                Ціна зі знижкою
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
+                @Html.DisplayNameFor(model => model.DiscountPrecent)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Stock)
@@ -36,58 +30,72 @@
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
             </th>
-            <th>Дії</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgeCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductWeight)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @string.Format("{0:0.00} ₴", item.Price)
-                </td>
-                <td>
-                    @if (item.DiscountPercentage > 0)
-                    {
-                        <span>@item.DiscountPercentage% знижка</span>
-                    }
-                    else
-                    {
-                        <span>-</span>
-                    }
-                </td>
-                <td>
-                    @if (item.DiscountPercentage > 0)
-                    {
-                        <span>@string.Format("{0:0.00} ₴", item.DiscountPrice)</span>
-                    }
-                    else
-                    {
-                        <span>-</span>
-                    }
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImageUrl)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редагувати</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Деталі</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Видалити</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountPrecent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgeCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductWeight)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

@@ -52,7 +52,7 @@
                         @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
                     </div>
 
-                    @if (product.DiscountPercentage > 0)
+                    @if (product.DiscountPrecent > 0)
                     {
                         <div class="product-price">
                             <span>Ціна: <del>@product.Price.ToString("0.00") ₴</del></span>

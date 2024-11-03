@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MySite.Models
 {
@@ -16,28 +17,39 @@ namespace MySite.Models
         [Required]
         public decimal Price { get; set; }
 
-        public int DiscountPercentage { get; set; }
+        public int DiscountPrecent { get; set; }
         public decimal? DiscountPrice
         {
             get
             {
-                if (DiscountPercentage > 0)
+                if (DiscountPrecent > 0)
                 {
-                    return Price - (Price * DiscountPercentage / 100);
+                    return Price - (Price * DiscountPrecent / 100);
                 }
                 return null;
             }
         }
 
-
-        [DataType(DataType.Date)]
-        public DateTime? ReleaseDate { get; set; }
-
         [Required]
         public int Stock { get; set; }
+
         public string? ImageUrl { get; set; }
-        public List<int> SelectedCategoryIds { get; set; } = new List<int>();
 
 
+        public int CategoryId { get; set; }
+        public int BrandId { get; set; }
+        public int AnimalTypeId { get; set; }
+
+
+        public virtual Category Category { get; set; }
+        public virtual Brand Brand { get; set; }
+        public virtual AnimalType AnimalType { get; set; }
+
+
+        public string AgeCategory { get; set; }
+
+        public string ProductSize { get; set; }
+
+        public decimal ProductWeight { get; set; }
     }
 }
