@@ -1,0 +1,154 @@
+﻿@model IEnumerable<MySite.Models.Product>
+
+@{
+    ViewData["Title"] = "Каталог товарів";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/сataloge.css">
+</head>
+
+<div class="catalog-container">
+
+    <div class="sidebar">
+        <div style="margin-bottom: 20px;">
+            <a href="~/Home/Index" class="home-button">На головну</a>
+        </div>
+
+        <h3>Фільтри</h3>
+        <div class="filter-section">
+            <label class="filter-title">Ціна:</label>
+            <div class="price-filter">
+                <input type="number" id="minPrice" placeholder="Мін" style="width: 80px; display: inline-block;" />
+                <span style="margin: 0 10px;">—</span> <!-- Двойная черточка -->
+                <input type="number" id="maxPrice" placeholder="Макс" style="width: 80px; display: inline-block;" />
+                <span>₴</span>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <label class="filter-title">
+                <input type="checkbox" id="inStock"> В наявності
+            </label>
+        </div>
+
+        <div class="filter-section">
+            <h4 class="filter-title">Категорія:</h4>
+            <ul class="category-list">
+                @if (ViewData["Categories"] != null)
+                {
+                    var categories = ViewData["Categories"] as IEnumerable<MySite.Models.Category>;
+                    foreach (var category in categories)
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="categoryIds" value="@category.Id"> @category.Name
+                            </label>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="filter-section">
+            <h4 class="filter-title">Бренд:</h4>
+            <ul class="brand-list">
+                @if (ViewData["Brands"] != null)
+                {
+                    var brands = ViewData["Brands"] as IEnumerable<MySite.Models.Brand>;
+                    foreach (var brand in brands)
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="brandIds" value="@brand.Id"> @brand.Name
+                            </label>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="filter-section">
+            <h4 class="filter-title">Тип тварини:</h4>
+            <ul class="animal-type-list">
+                @if (ViewData["AnimalTypes"] != null)
+                {
+                    var animalTypes = ViewData["AnimalTypes"] as IEnumerable<MySite.Models.AnimalType>;
+                    foreach (var animalType in animalTypes)
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="animalTypeIds" value="@animalType.Id"> @animalType.Name
+                            </label>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="filter-section" style="text-align: center; margin-top: 20px;">
+            <button id="filterPrice" class="btn-filter">Фільтрувати</button>
+        </div>
+    </div>
+
+    <div class="product-list">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var product in Model)
+            {
+                <div class="product-item">
+                    <img src="@product.ImageUrl" alt="@product.Name">
+                    <div class="product-title">@product.Name</div>
+
+                    <div class="product-availability">
+                        @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
+                    </div>
+
+                    @if (product.DiscountPrecent > 0)
+                    {
+                        <div class="product-price">
+                            <span>Ціна: <del>@product.Price.ToString("0.00") ₴</del></span>
+                            <span class="product-discount">@product.DiscountPrice.Value.ToString("0.00") ₴</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product-price">
+                            <span>Ціна: @product.Price.ToString("0.00") ₴</span>
+                        </div>
+                    }
+
+                    <button class="buy-button">Купити</button>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Немає товарів для відображення.</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("filterPrice").addEventListener("click", function () {
+            const minPrice = document.getElementById("minPrice").value;
+            const maxPrice = document.getElementById("maxPrice").value;
+            const inStock = document.getElementById("inStock").checked;
+
+            // Получение выбранных категорий
+            const categoryCheckboxes = document.querySelectorAll('input[name="categoryIds"]:checked');
+                const categoryIds = Array.from(categoryCheckboxes).map(cb => cb.value);
+
+                    // Получение выбранных брендов
+                    const brandCheckboxes = document.querySelectorAll('input[name="brandIds"]:checked');
+                    const brandIds = Array.from(brandCheckboxes).map(cb => cb.value);
+
+                    // Получение выбранных типов животных
+                    const animalTypeCheckboxes = document.querySelectorAll('input[name="animalTypeIds"]:checked');
+                    const animalTypeIds = Array.from(animalTypeCheckboxes).map(cb => cb.value);
+
+                    window.location.href = `@Url.Action("Index", "Catalog")?minPrice=${minPrice}&maxPrice=${maxPrice}&inStock=${inStock}&categoryIds=${categoryIds.join(",")}&brandIds=${brandIds.join(",")}&animalTypeIds=${animalTypeIds.join(",")}`;
+                });
+    </script>
+}

@@ -24,7 +24,7 @@
         <nav>
             <ul>
                 <li><a href="/Home/Index">Головна</a></li>
-                <li><a href="/Home/Cataloge">Каталог</a></li>
+                <li><a href="/Catalog/Index">Каталог</a></li>
                     @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
                     {
                         <a href="/Products">БД</a>
@@ -36,7 +36,7 @@
 
         <div class="search-bar">
             <div class="search-bar">
-                <form asp-controller="Home" asp-action="Cataloge" method="get">
+                <form asp-controller="Catalog" asp-action="Index" method="get">
                     <input type="text" name="searchQuery" placeholder="Я шукаю..." />
                     <button type="submit">Пошук</button>
                 </form>

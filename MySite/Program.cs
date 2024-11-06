@@ -46,8 +46,18 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "catalog",
+    pattern: "Catalog/{action=Index}/{id?}",
+    defaults: new { controller = "Catalog" }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
+
+
 app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope()) //Завжди створювати ролі

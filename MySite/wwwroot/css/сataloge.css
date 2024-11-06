@@ -1,9 +1,10 @@
 ﻿.catalog-container {
-    display: flex; 
+    display: flex;
     margin: 20px;
 }
+
 .sidebar {
-    width: 20%; 
+    width: 20%;
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 8px;
@@ -39,11 +40,6 @@
     margin: 0;
 }
 
-
-
-
-
-
 .buy-button {
     width: 100%;
     padding: 10px;
@@ -56,7 +52,6 @@
     font-size: 16px;
 }
 
-
 .filter-section {
     margin-bottom: 20px;
 }
@@ -66,21 +61,48 @@
     margin-bottom: 5px;
 }
 
-
-.brand-search {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 2px solid #ccc;
-    margin-bottom: 10px;
-}
-
-.brand-list {
+.category-list, .animal-type-list, .brand-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-    .brand-list li {
+    .category-list li, .animal-type-list li, .brand-list li {
         margin-bottom: 5px;
+    }
+
+.price-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .price-filter input {
+        width: 80px;
+        display: inline-block;
+        margin-right: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+
+    .price-filter span {
+        margin-left: 5px;
+    }
+
+.btn-filter {
+    background-color: #149EF2;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+}
+
+    .btn-filter:hover {
+        background-color: #0c82c1;
     }
