@@ -48,33 +48,72 @@ namespace MySite.Controllers
         }
 
         // GET: Products/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name");
             ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name");
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name");
             return View();
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,DiscountPrecent,Stock,ImageUrl,CategoryId,BrandId,AnimalTypeId,AgeCategory,ProductSize,ProductWeight")] Product product)
         {
-            if (ModelState.IsValid)
+            // Перевірка моделі на валідність
+            if (!ModelState.IsValid)
             {
+                foreach (var state in ModelState)
+                {
+                    if (state.Value.Errors.Count > 0)
+                    {
+                        TempData["ErrorMessage"] = $"Помилка у полі '{state.Key}': {state.Value.Errors.First().ErrorMessage}";
+                        ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
+                        ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name", product.BrandId);
+                        ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name", product.AnimalTypeId);
+                        return View(product);
+                    }
+                }
+            }
+
+            try
+            {
+                // Перевірка наявності вибраних категорій, бренду та типу тварини
+                if (_context.Category.Find(product.CategoryId) == null)
+                {
+                    TempData["ErrorMessage"] = "Вибрана категорія не існує.";
+                    return View(product);
+                }
+
+                if (_context.Brand.Find(product.BrandId) == null)
+                {
+                    TempData["ErrorMessage"] = "Вибраний бренд не існує.";
+                    return View(product);
+                }
+
+                if (_context.AnimalType.Find(product.AnimalTypeId) == null)
+                {
+                    TempData["ErrorMessage"] = "Вибраний тип тварини не існує.";
+                    return View(product);
+                }
+
+                // Додавання продукту
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Запис успішно створено!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name", product.AnimalTypeId);
-            ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
-            return View(product);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Сталася помилка при створенні запису: {ex.Message}";
+                ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
+                ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name", product.BrandId);
+                ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name", product.AnimalTypeId);
+                return View(product);
+            }
         }
-
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -108,6 +147,8 @@ namespace MySite.Controllers
 
             if (ModelState.IsValid)
             {
+
+
                 try
                 {
                     _context.Update(product);
@@ -126,9 +167,9 @@ namespace MySite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name", product.AnimalTypeId);
-            ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
+            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name");
+            ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
             return View(product);
         }
 

@@ -35,9 +35,11 @@ namespace MySite.Models
 
         public string? ImageUrl { get; set; }
 
-
+        [Required(ErrorMessage = "Поле 'Category' обов'язкове для заповнення.")]
         public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Поле 'Brand' обов'язкове для заповнення.")]
         public int BrandId { get; set; }
+        [Required(ErrorMessage = "Поле 'AnimalType' обов'язкове для заповнення.")]
         public int AnimalTypeId { get; set; }
 
 

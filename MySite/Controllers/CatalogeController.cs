@@ -17,7 +17,11 @@ namespace MySite.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var categories = await _context.Category.ToListAsync();
+            ViewData["Categories"] = categories;
+
             var products = await _context.Product.ToListAsync();
+
             return View(products);
         }
     }
