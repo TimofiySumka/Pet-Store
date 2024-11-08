@@ -22,6 +22,15 @@ public class CatalogController : Controller
         ViewData["Brands"] = brands;
         ViewData["AnimalTypes"] = animalTypes;
 
+        // Сохраняем значения фильтров в ViewData
+        ViewData["MinPrice"] = minPrice;
+        ViewData["MaxPrice"] = maxPrice;
+        ViewData["InStock"] = inStock;
+        ViewData["SelectedCategoryIds"] = categoryIds;
+        ViewData["SelectedBrandIds"] = brandIds;
+        ViewData["SelectedAnimalTypeIds"] = animalTypeIds;
+        ViewData["SearchQuery"] = searchQuery;
+
         var products = await _context.Product
             .Include(p => p.Category)
             .Include(p => p.Brand)
@@ -60,7 +69,6 @@ public class CatalogController : Controller
             products = products.Where(p => animalTypeIds.Contains(p.AnimalTypeId)).ToList();
         }
 
-        ViewData["SearchQuery"] = searchQuery; // Передаем запрос в представление
         return View(products);
     }
 }

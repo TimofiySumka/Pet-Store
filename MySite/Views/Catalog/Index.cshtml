@@ -7,28 +7,27 @@
 
 <head>
     <link rel="stylesheet" href="~/css/сataloge.css">
+    <link rel="stylesheet" href="~/css/product.css">
 </head>
 
 <div class="catalog-container">
+    <!-- Боковя панель с фільтрами -->
     <div class="sidebar">
-        <div style="margin-bottom: 20px;">
-            <a href="~/Home/Index" class="home-button">На головну</a>
-        </div>
-
         <h3>Фільтри</h3>
-        <div class="filter-section">
-            <label class="filter-title">Ціна:</label>
-            <div class="price-filter">
-                <input type="number" id="minPrice" placeholder="Мін" style="width: 80px; display: inline-block;" />
-                <span style="margin: 0 10px;">—</span>
-                <input type="number" id="maxPrice" placeholder="Макс" style="width: 80px; display: inline-block;" />
-                <span>₴</span>
-            </div>
+
+        <div class="price-filter">
+            <input type="number" id="minPrice" placeholder="Мін" min="0"
+                   value="@ViewData["MinPrice"] ?? " " " />
+            <span>₴</span>
+            <span style="margin: 0 10px;">—</span>
+            <input type="number" id="maxPrice" placeholder="Макс" min="0"
+                   value="@ViewData["MaxPrice"] ?? " " " />
+            <span>₴</span>
         </div>
 
         <div class="filter-section">
             <label class="filter-title">
-                <input type="checkbox" id="inStock"> В наявності
+                <input type="checkbox" id="inStock" @(ViewData["InStock"] != null && (bool)ViewData["InStock"] ? "checked" : "")> В наявності
             </label>
         </div>
 
@@ -37,12 +36,14 @@
             <ul class="category-list">
                 @if (ViewData["Categories"] != null)
                 {
+                    var selectedCategoryIds = ViewData["SelectedCategoryIds"] as int[];
                     var categories = ViewData["Categories"] as IEnumerable<MySite.Models.Category>;
                     foreach (var category in categories)
                     {
                         <li>
                             <label>
-                                <input type="checkbox" name="categoryIds" value="@category.Id"> @category.Name
+                                <input type="checkbox" name="categoryIds" value="@category.Id"
+                                @(selectedCategoryIds != null && selectedCategoryIds.Contains(category.Id) ? "checked" : "")> @category.Name
                             </label>
                         </li>
                     }
@@ -55,12 +56,14 @@
             <ul class="brand-list">
                 @if (ViewData["Brands"] != null)
                 {
+                    var selectedBrandIds = ViewData["SelectedBrandIds"] as int[];
                     var brands = ViewData["Brands"] as IEnumerable<MySite.Models.Brand>;
                     foreach (var brand in brands)
                     {
                         <li>
                             <label>
-                                <input type="checkbox" name="brandIds" value="@brand.Id"> @brand.Name
+                                <input type="checkbox" name="brandIds" value="@brand.Id"
+                                @(selectedBrandIds != null && selectedBrandIds.Contains(brand.Id) ? "checked" : "")> @brand.Name
                             </label>
                         </li>
                     }
@@ -73,12 +76,14 @@
             <ul class="animal-type-list">
                 @if (ViewData["AnimalTypes"] != null)
                 {
+                    var selectedAnimalTypeIds = ViewData["SelectedAnimalTypeIds"] as int[];
                     var animalTypes = ViewData["AnimalTypes"] as IEnumerable<MySite.Models.AnimalType>;
                     foreach (var animalType in animalTypes)
                     {
                         <li>
                             <label>
-                                <input type="checkbox" name="animalTypeIds" value="@animalType.Id"> @animalType.Name
+                                <input type="checkbox" name="animalTypeIds" value="@animalType.Id"
+                                @(selectedAnimalTypeIds != null && selectedAnimalTypeIds.Contains(animalType.Id) ? "checked" : "")> @animalType.Name
                             </label>
                         </li>
                     }
@@ -86,64 +91,80 @@
             </ul>
         </div>
 
-        <div class="filter-section"">
+        <div class="filter-section">
             <button id="filter" class="btn-filter">Фільтрувати</button>
         </div>
     </div>
 
-    <div class="search-option-bar">
-        <div class="search-title">
-        @if (!string.IsNullOrEmpty(searchQuery))
-        {
-                <h3>Результати пошуку: @searchQuery</h3>
-        }
+    <!-- Основная область -->
+    <div class="main-content">
+        <div class="search-option-bar">
+            <div class="search-title">
+                @if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    <h3>Результати пошуку: @searchQuery</h3>
+                }
+            </div>
+            <div class="sort-options">
+                <label for="sortOrder">Сортування:</label>
+                <select id="sortOrder">
+                    <option value="priceDesc">Від дорогих до дешевих</option>
+                    <option value="priceAsc">Від дешевих до дорогих</option>
+                    <option value="discount">По акціям</option>
+                </select>
+            </div>
         </div>
-        <div class="sort-options">
-            <label for="sortOrder">Сортувати за:</label>
-            <select id="sortOrder">
-                <option value="priceDesc">Від дорогих до дешевих</option>
-                <option value="priceAsc">Від дешевих до дорогих</option>
-                <option value="discount">По акціям</option>
-            </select>
-        </div>
-    </div>
-    <div class="product-list-container">
-        @if (Model != null && Model.Any())
-        {
-            foreach (var product in Model)
+
+        <!-- Список товарів -->
+        <div class="product-list-container">
+            @if (Model != null && Model.Any())
             {
-                <div class="product-item">
-                    <img src="@product.ImageUrl" alt="@product.Name" class="product-image">
-                    <div class="product-title">@product.Name</div>
-                    <div class="product-description">@product.Description</div>
-                    <div class="product-availability">
-                        @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
+                foreach (var product in Model)
+                {
+                    <div class="product-item">
+                        <a href="@Url.Action("AddToFavorites", "Catalog", new { productId = product.Id })" class="favorite-icon">
+                            <img src="~/imgs/faw-un.png" alt="Add to Favorites" />
+                        </a>
+
+     
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a href="@Url.Action("Edit", "Catalog", new { id = product.Id })" class="edit-icon">
+                                <img src="~/images/edit.png" alt="Edit Product" />
+                            </a>
+                        }
+
+                        <img src="@product.ImageUrl" alt="@product.Name" class="product-image">
+                        <div class="product-title">@product.Name</div>
+                        <div class="product-description">@product.Description</div>
+                        <div class="product-availability">
+                            @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
+                        </div>
+
+                        @if (product.DiscountPrecent > 0)
+                        {
+                            <div class="product-price">
+                                <span>Ціна: <del>@product.Price.ToString("0.00") ₴</del></span>
+                                <span class="product-discount">@product.DiscountPrice.Value.ToString("0.00") ₴</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="product-price">
+                                <span>Ціна: @product.Price.ToString("0.00") ₴</span>
+                            </div>
+                        }
+
+                        <button class="buy-button">Купити</button>
                     </div>
-
-                    @if (product.DiscountPrecent > 0)
-                    {
-                        <div class="product-price">
-                            <span>Ціна: <del>@product.Price.ToString("0.00") ₴</del></span>
-                            <span class="product-discount">@product.DiscountPrice.Value.ToString("0.00") ₴</span>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="product-price">
-                            <span>Ціна: @product.Price.ToString("0.00") ₴</span>
-                        </div>
-                    }
-
-                    <button class="buy-button">Купити</button>
-                </div>
+                }
             }
-        }
-        else
-        {
-            <p>Немає товарів для відображення.</p>
-        }
+            else
+            {
+                <p>Немає товарів для відображення.</p>
+            }
+        </div>
     </div>
-
 </div>
 
 @section Scripts {

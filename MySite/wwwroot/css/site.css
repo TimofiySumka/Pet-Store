@@ -121,79 +121,8 @@ footer {
             margin-right: 10px;
         }
 
-.product-list {
-    width: 75%;
-    display: flex;
-    flex-wrap: wrap;
-    overflow-x: auto;
-    gap: 20px;
-    justify-content: flex-start;
-    padding: 0;
-    margin: 0;
-}
 
 
-.product-item {
-    width: 260px;
-    height: 440px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s;
-}
-
-.product-item img {
-    max-height: 230px;
-    width: auto;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
-.product-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-}
-
-.product-description {
-    font-size: 14px;
-    color: #555;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-}
-
-.product-price {
-    font-size: 17px;
-    color: black;
-    text-align: left;
-    margin-top: 5px;
-}
-
-.product-availability {
-    font-size: 17px;
-    color: black;
-    text-align: left;
-    margin-top: 5px;
-}
-
-.product-discount {
-    font-size: 16px;
-    text-align: left;
-    margin-top: 5px;
-    color: red;
-}
 
 /* Низ (посилання) */
 .footer-links {
