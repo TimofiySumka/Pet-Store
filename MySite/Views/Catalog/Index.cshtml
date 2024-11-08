@@ -123,45 +123,9 @@
         <div class="product-list-container">
             @if (Model != null && Model.Any())
             {
-                foreach (var product in Model)
+                @foreach (var product in Model)
                 {
-                    <div class="product-item">
-                        <a href="javascript:void(0);" class="favorite-icon" onclick="addToWishlist(@product.Id)">
-                            <img src="~/imgs/fav-un.png" alt="Добавить в избранное" id="favorite-icon-@product.Id" />
-                        </a>
-
-                        @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
-                        {
-                            <a href="@Url.Action("Edit", "Products", new { id = product.Id })" class="edit-icon">
-                                <img src="~/imgs/edit.png" alt="Змінити" />
-                            </a>
-                        }
-
-                        <img src="@product.ImageUrl" alt="@product.Name" class="product-image">
-                        <div class="product-title">@product.Name</div>
-                        <div class="product-description">@product.Description</div>
-                        <div class="product-availability @(product.Stock > 0 ? "in-stock" : "out-of-stock")">
-                            @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
-                        </div>
-
-                        @if (product.DiscountPrecent > 0)
-                        {
-                            <div class="product-price">
-                                <span><del>@product.Price.ToString("0.00") ₴</del></span>
-                                <span class="product-discount">@product.DiscountPrice.Value.ToString("0.00") ₴</span>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="product-price">
-                                <span>@product.Price.ToString("0.00") ₴</span>
-                            </div>
-                        }
-
-                        <div class="button-container">
-                            <button class="buy-button">Купити</button>
-                        </div>
-                    </div>
+                    @Html.Partial("_ProductItem", product)
                 }
             }
             else

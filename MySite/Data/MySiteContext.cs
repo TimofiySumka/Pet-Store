@@ -52,12 +52,18 @@ namespace MySite.Data
                 .HasForeignKey(p => p.AnimalTypeId)
                 .IsRequired();
 
-            // Настройка для Wishlist с использованием IdentityUser
+
             modelBuilder.Entity<Wishlist>()
-                .HasOne<IdentityUser>(w => w.User)
+                .HasOne(w => w.User)
                 .WithMany()
                 .HasForeignKey(w => w.UserId)
                 .IsRequired();
+            modelBuilder.Entity<Wishlist>()
+                .HasOne(w => w.Product)
+                .WithMany()
+                .HasForeignKey(w => w.ProductId);
+
+
         }
     }
 }

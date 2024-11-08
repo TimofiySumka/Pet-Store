@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using MySite.Models;
 using MySite.Data;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using MySite.Areas.Identity.Data;
 
 namespace MySite.Controllers
 {
@@ -10,11 +12,13 @@ namespace MySite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly MySiteContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, MySiteContext context)
+        public HomeController(ILogger<HomeController> logger, MySiteContext context, UserManager<User> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
 
@@ -29,12 +33,22 @@ namespace MySite.Controllers
             return View();
         }
 
-        public IActionResult Wishlist()
+        public async Task<IActionResult> Wishlist()
         {
 
-            return View();
-        }
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Redirect("https://localhost:7017/Identity/Account/Login");
+            }
 
+            var wishlistItems = await _context.Wishlist
+                .Include(w => w.Product)
+                .Where(w => w.UserId == user.Id)
+                .ToListAsync();
+
+            return View(wishlistItems);
+        }
 
         public IActionResult Cart()
         {

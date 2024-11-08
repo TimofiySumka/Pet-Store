@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<MySite.Models.Wishlist>
+
+@{
     ViewData["Title"] = "Обране";
 }
 <head>
@@ -12,18 +14,29 @@
 
         <div class="wishlist-container">
             <div class="header">
-                <h1 class="centered-title">Список улюбленого</h1>
+                <h1 class="centered-title">Список обраного</h1>
             </div>
 
             <div class="info-section">
                 <div class="actions right-align">
                     <button class="btn-buy-all">Купити все</button>
-                    <p class="item-count">Кількість товарів: 0</p>
+                    <p class="item-count">Кількість товарів: @Model.Count()</p>
                 </div>
             </div>
 
-            <p class="empty-list-message">Ваш список улюбленого порожній</p>
+            @if (!Model.Any())
+            {
+                <p class="empty-list-message">Ваш список улюбленого порожній</p>
+            }
+            else
+            {
+                <div class="product-list">
+                    @foreach (var item in Model)
+                    {
+                        @await Html.PartialAsync("_ProductItem", item.Product)
+                    }
+                </div>
+            }
         </div>
-
     </div>
 </body>
