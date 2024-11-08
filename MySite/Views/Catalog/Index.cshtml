@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Каталог товарів";
+    var searchQuery = ViewData["SearchQuery"] as string;
 }
 
 <head>
@@ -9,7 +10,6 @@
 </head>
 
 <div class="catalog-container">
-
     <div class="sidebar">
         <div style="margin-bottom: 20px;">
             <a href="~/Home/Index" class="home-button">На головну</a>
@@ -20,7 +20,7 @@
             <label class="filter-title">Ціна:</label>
             <div class="price-filter">
                 <input type="number" id="minPrice" placeholder="Мін" style="width: 80px; display: inline-block;" />
-                <span style="margin: 0 10px;">—</span> <!-- Двойная черточка -->
+                <span style="margin: 0 10px;">—</span>
                 <input type="number" id="maxPrice" placeholder="Макс" style="width: 80px; display: inline-block;" />
                 <span>₴</span>
             </div>
@@ -86,20 +86,36 @@
             </ul>
         </div>
 
-        <div class="filter-section" style="text-align: center; margin-top: 20px;">
-            <button id="filterPrice" class="btn-filter">Фільтрувати</button>
+        <div class="filter-section"">
+            <button id="filter" class="btn-filter">Фільтрувати</button>
         </div>
     </div>
 
-    <div class="product-list">
+    <div class="search-option-bar">
+        <div class="search-title">
+        @if (!string.IsNullOrEmpty(searchQuery))
+        {
+                <h3>Результати пошуку: @searchQuery</h3>
+        }
+        </div>
+        <div class="sort-options">
+            <label for="sortOrder">Сортувати за:</label>
+            <select id="sortOrder">
+                <option value="priceDesc">Від дорогих до дешевих</option>
+                <option value="priceAsc">Від дешевих до дорогих</option>
+                <option value="discount">По акціям</option>
+            </select>
+        </div>
+    </div>
+    <div class="product-list-container">
         @if (Model != null && Model.Any())
         {
             foreach (var product in Model)
             {
                 <div class="product-item">
-                    <img src="@product.ImageUrl" alt="@product.Name">
+                    <img src="@product.ImageUrl" alt="@product.Name" class="product-image">
                     <div class="product-title">@product.Name</div>
-
+                    <div class="product-description">@product.Description</div>
                     <div class="product-availability">
                         @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
                     </div>
@@ -127,28 +143,24 @@
             <p>Немає товарів для відображення.</p>
         }
     </div>
+
 </div>
 
 @section Scripts {
     <script>
-        document.getElementById("filterPrice").addEventListener("click", function () {
+        document.getElementById("filter").addEventListener("click", function () {
             const minPrice = document.getElementById("minPrice").value;
             const maxPrice = document.getElementById("maxPrice").value;
             const inStock = document.getElementById("inStock").checked;
 
-            // Получение выбранных категорий
             const categoryCheckboxes = document.querySelectorAll('input[name="categoryIds"]:checked');
-                const categoryIds = Array.from(categoryCheckboxes).map(cb => cb.value);
+            const categoryIds = Array.from(categoryCheckboxes).map(cb => cb.value);
+            const brandCheckboxes = document.querySelectorAll('input[name="brandIds"]:checked');
+            const brandIds = Array.from(brandCheckboxes).map(cb => cb.value);
+            const animalTypeCheckboxes = document.querySelectorAll('input[name="animalTypeIds"]:checked');
+            const animalTypeIds = Array.from(animalTypeCheckboxes).map(cb => cb.value);
 
-                    // Получение выбранных брендов
-                    const brandCheckboxes = document.querySelectorAll('input[name="brandIds"]:checked');
-                    const brandIds = Array.from(brandCheckboxes).map(cb => cb.value);
-
-                    // Получение выбранных типов животных
-                    const animalTypeCheckboxes = document.querySelectorAll('input[name="animalTypeIds"]:checked');
-                    const animalTypeIds = Array.from(animalTypeCheckboxes).map(cb => cb.value);
-
-                    window.location.href = `@Url.Action("Index", "Catalog")?minPrice=${minPrice}&maxPrice=${maxPrice}&inStock=${inStock}&categoryIds=${categoryIds.join(",")}&brandIds=${brandIds.join(",")}&animalTypeIds=${animalTypeIds.join(",")}`;
-                });
+            window.location.href = `@Url.Action("Index", "Catalog")?minPrice=${minPrice}&maxPrice=${maxPrice}&inStock=${inStock}&categoryIds=${categoryIds.join(",")}&brandIds=${brandIds.join(",")}&animalTypeIds=${animalTypeIds.join(",")}`;
+        });
     </script>
 }

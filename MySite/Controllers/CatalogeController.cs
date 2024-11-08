@@ -40,7 +40,6 @@ public class CatalogController : Controller
                 (!maxPrice.HasValue || p.Price <= maxPrice.Value)).ToList();
         }
 
-
         if (inStock.HasValue && inStock.Value)
         {
             products = products.Where(p => p.Stock > 0).ToList();
@@ -61,6 +60,7 @@ public class CatalogController : Controller
             products = products.Where(p => animalTypeIds.Contains(p.AnimalTypeId)).ToList();
         }
 
+        ViewData["SearchQuery"] = searchQuery; // Передаем запрос в представление
         return View(products);
     }
 }
