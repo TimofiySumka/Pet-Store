@@ -1,16 +1,43 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MySite.Areas.Identity.Data;
 using MySite.Data;
 using MySite.Models;
 
 public class CatalogController : Controller
 {
     private readonly MySiteContext _context;
+    private readonly UserManager<User> _userManager;
 
-    public CatalogController(MySiteContext context)
+    public CatalogController(MySiteContext context, UserManager<User> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Wishlist wishlist)
+    {
+        if (ModelState.IsValid)
+        {
+            var existingWishlistItem = await _context.Wishlist
+                .FirstOrDefaultAsync(w => w.UserId == wishlist.UserId && w.ProductId == wishlist.ProductId);
+
+            if (existingWishlistItem == null)
+            {
+                _context.Add(wishlist);
+                await _context.SaveChangesAsync();
+                return Ok(); 
+            }
+
+            return Conflict("Item already exists in wishlist"); 
+        }
+
+        return BadRequest("Invalid data");
+    }
+
+
 
     public async Task<IActionResult> Index(decimal? minPrice, decimal? maxPrice, bool? inStock, string searchQuery, int[] categoryIds, int[] brandIds, int[] animalTypeIds)
     {
@@ -21,8 +48,6 @@ public class CatalogController : Controller
         ViewData["Categories"] = categories;
         ViewData["Brands"] = brands;
         ViewData["AnimalTypes"] = animalTypes;
-
-        // Сохраняем значения фильтров в ViewData
         ViewData["MinPrice"] = minPrice;
         ViewData["MaxPrice"] = maxPrice;
         ViewData["InStock"] = inStock;

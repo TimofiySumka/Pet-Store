@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MySite.Models;
 
 namespace MySite.Data
 {
-    public class MySiteContext : DbContext
+    public class MySiteContext : IdentityDbContext<IdentityUser>
     {
-        public MySiteContext (DbContextOptions<MySiteContext> options)
+        public MySiteContext(DbContextOptions<MySiteContext> options)
             : base(options)
         {
         }
@@ -19,12 +18,14 @@ namespace MySite.Data
         public DbSet<Wishlist> Wishlist { get; set; } = default!;
         public DbSet<Cart> Carts { get; set; } = default!;
         public DbSet<CartItem> CartItems { get; set; } = default!;
-
+        public DbSet<Brand> Brand { get; set; } = default!;
+        public DbSet<AnimalType> AnimalType { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
+
+            // Настройки для Product
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasColumnType("decimal(18,2)");
@@ -33,12 +34,30 @@ namespace MySite.Data
                 .Property(p => p.ProductWeight)
                 .HasColumnType("decimal(18,2)");
 
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(p => p.CategoryId)
+                .IsRequired();
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Brand)
+                .WithMany()
+                .HasForeignKey(p => p.BrandId)
+                .IsRequired();
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.AnimalType)
+                .WithMany()
+                .HasForeignKey(p => p.AnimalTypeId)
+                .IsRequired();
+
+            // Настройка для Wishlist с использованием IdentityUser
+            modelBuilder.Entity<Wishlist>()
+                .HasOne<IdentityUser>(w => w.User)
+                .WithMany()
+                .HasForeignKey(w => w.UserId)
+                .IsRequired();
         }
-        public DbSet<MySite.Models.Brand> Brand { get; set; } = default!;
-        public DbSet<MySite.Models.AnimalType> AnimalType { get; set; } = default!;
-
-
     }
-
-
 }

@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<MySite.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
+@inject UserManager<MySite.Areas.Identity.Data.User> UserManager
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 
 @{
     ViewData["Title"] = "Каталог товарів";
@@ -11,7 +15,7 @@
 </head>
 
 <div class="catalog-container">
-    <!-- Боковя панель с фільтрами -->
+    <!-- Боковая панель с фильтрами -->
     <div class="sidebar">
         <h3>Фільтри</h3>
 
@@ -115,47 +119,48 @@
             </div>
         </div>
 
-        <!-- Список товарів -->
+        <!-- Список товаров -->
         <div class="product-list-container">
             @if (Model != null && Model.Any())
             {
                 foreach (var product in Model)
                 {
                     <div class="product-item">
-                        <a href="@Url.Action("AddToFavorites", "Catalog", new { productId = product.Id })" class="favorite-icon">
-                            <img src="~/imgs/faw-un.png" alt="Add to Favorites" />
+                        <a href="javascript:void(0);" class="favorite-icon" onclick="addToWishlist(@product.Id)">
+                            <img src="~/imgs/fav-un.png" alt="Добавить в избранное" id="favorite-icon-@product.Id" />
                         </a>
 
-     
-                        @if (User.IsInRole("Administrator"))
+                        @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
                         {
-                            <a href="@Url.Action("Edit", "Catalog", new { id = product.Id })" class="edit-icon">
-                                <img src="~/images/edit.png" alt="Edit Product" />
+                            <a href="@Url.Action("Edit", "Products", new { id = product.Id })" class="edit-icon">
+                                <img src="~/imgs/edit.png" alt="Змінити" />
                             </a>
                         }
 
                         <img src="@product.ImageUrl" alt="@product.Name" class="product-image">
                         <div class="product-title">@product.Name</div>
                         <div class="product-description">@product.Description</div>
-                        <div class="product-availability">
+                        <div class="product-availability @(product.Stock > 0 ? "in-stock" : "out-of-stock")">
                             @(product.Stock > 0 ? "В наявності" : "Немає в наявності")
                         </div>
 
                         @if (product.DiscountPrecent > 0)
                         {
                             <div class="product-price">
-                                <span>Ціна: <del>@product.Price.ToString("0.00") ₴</del></span>
+                                <span><del>@product.Price.ToString("0.00") ₴</del></span>
                                 <span class="product-discount">@product.DiscountPrice.Value.ToString("0.00") ₴</span>
                             </div>
                         }
                         else
                         {
                             <div class="product-price">
-                                <span>Ціна: @product.Price.ToString("0.00") ₴</span>
+                                <span>@product.Price.ToString("0.00") ₴</span>
                             </div>
                         }
 
-                        <button class="buy-button">Купити</button>
+                        <div class="button-container">
+                            <button class="buy-button">Купити</button>
+                        </div>
                     </div>
                 }
             }
@@ -169,6 +174,30 @@
 
 @section Scripts {
     <script>
+        function addToWishlist(productId) {
+            const token = '@Antiforgery.GetTokens(Context).RequestToken';
+
+            fetch('/Catalog/AddToWishlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({ productId: productId })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById(`favorite-icon-${productId}`).src = "~/imgs/fav-added.png";
+                        alert("Товар добавлен в избранное!");
+                    } else if (response.status === 409) {
+                        alert("Товар уже в избранном.");
+                    } else {
+                        alert("Не удалось добавить товар в избранное.");
+                    }
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+
         document.getElementById("filter").addEventListener("click", function () {
             const minPrice = document.getElementById("minPrice").value;
             const maxPrice = document.getElementById("maxPrice").value;

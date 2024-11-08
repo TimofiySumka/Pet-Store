@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySite.Models
 {
@@ -7,9 +9,12 @@ namespace MySite.Models
         public int Id { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        [ForeignKey("AspNetUser")]
+        public string UserId { get; set; }
 
         [Required]
         public int ProductId { get; set; }
+
+        public virtual IdentityUser User { get; set; }
     }
 }
