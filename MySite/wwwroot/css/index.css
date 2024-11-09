@@ -10,6 +10,8 @@
     padding: 40px 20px;
 }
 
+
+
 .banner-content {
     max-width: 70%;
     text-align: right;
@@ -87,6 +89,17 @@
     }
 
 /* Пропозиції */
+
+
+.product-line {
+    display: flex; /* Используем flexbox для горизонтального расположения */
+    flex-wrap: nowrap; /* Не разрешаем перенос строк */
+    gap: 20px; /* Расстояние между товарами */
+    justify-content: flex-start; /* Выравнивание товаров по началу строки */
+    margin: 0;
+    padding: 0;
+    overflow-x: auto; /* Добавляем горизонтальную прокрутку, если товаров слишком много */
+}
 
 
 .product-offers button {

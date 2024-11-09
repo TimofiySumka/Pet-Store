@@ -17,24 +17,36 @@ public class CatalogController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Wishlist wishlist)
+    public async Task<IActionResult> AddToWishlist(int productId)
     {
-        if (ModelState.IsValid)
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
         {
-            var existingWishlistItem = await _context.Wishlist
-                .FirstOrDefaultAsync(w => w.UserId == wishlist.UserId && w.ProductId == wishlist.ProductId);
-
-            if (existingWishlistItem == null)
-            {
-                _context.Add(wishlist);
-                await _context.SaveChangesAsync();
-                return Ok(); 
-            }
-
-            return Conflict("Item already exists in wishlist"); 
+            return Unauthorized();
         }
 
-        return BadRequest("Invalid data");
+        var existingWishlistItem = await _context.Wishlist
+            .FirstOrDefaultAsync(w => w.UserId == user.Id && w.ProductId == productId);
+
+        if (existingWishlistItem == null)
+        {
+            // Додавання
+            var wishlistItem = new Wishlist
+            {
+                UserId = user.Id,
+                ProductId = productId
+            };
+            _context.Wishlist.Add(wishlistItem);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        else
+        {
+            // Видалення
+            _context.Wishlist.Remove(existingWishlistItem);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 
 

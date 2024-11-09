@@ -22,9 +22,15 @@ namespace MySite.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await _context.Product
+                .Include(p => p.Category)
+                .Include(p => p.Brand)
+                .Include(p => p.AnimalType)
+                .ToListAsync();
+
+            return View(products);  
         }
 
 

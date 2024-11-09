@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<MySite.Models.Product>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
+@inject UserManager<MySite.Areas.Identity.Data.User> UserManager
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+
+<!DOCTYPE html>
 <head>
     <title>Магазин товарів для тварин</title>
     <link rel="stylesheet" href="styles.css">
@@ -41,50 +48,35 @@
             </div>
         </div>
     </section>
+
     <!-- Акції -->
+
     <section class="product-offers">
-        <h4>Акції та пропозиції <button>Всі акції та пропозиції ></button> </h4>
-        <ul class="product-list">
-            <li class="product-item">
-                <div class="product-img">
-                    <img src="~/imgs/product1.jpg" alt="Акційний товар 1">
-                </div>
-                <div class="product-title">Мазь для лапок</div>
-                <div class="product-discount">-15%</div>
-                <div class="product-price">400 грн</div>
-            </li>
-            <li class="product-item">
-                <div class="product-img">
-                    <img src="~/imgs/product2.jpg" alt="Акційний товар 2">
-                </div>
-                <div class="product-title">Набір собчаого корму,від 1 до 40 кг</div>
-                <div class="product-discount">-10%</div>
-                <div class="product-price">800 грн</div>
-                </li>
-        </ul>
+        <h4>Акції та пропозиції <button>Всі акції та пропозиції ></button></h4>
+        <div class="product-line">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var product in Model.Where(p => p.DiscountPrecent > 0).Take(2))
+                {
+                    @Html.Partial("_ProductItem", product)
+                }
+            }
+        </div>
     </section>
 
     <!-- Новинки -->
     <section class="product-offers">
-        <h4>Новинки<button>Всі новинки ></button> </h4>
-        <ul class="product-list">
-            <li class="product-item">
-                <div class="product-img">
-                    <img src="~/imgs/Product1.jpg" alt="Новинка 1">
-                </div>
-                <div class="product-title">Puramur Professional Extra Gloss Сироватка для котів і собак</div>
-                <div class="product-price">250 грн</div>
-            </li>
-            <li class="product-item">
-                <div class="product-img">
-                    <img src="~/imgs/Product2.jpg" alt="Новинка 2">
-                </div>
-                <div class="product-title">Petbed Velor Лежак "Пончик", бежевий</div>
-                <div class="product-price">500 грн</div>
-            </li>
-            <!-- Додаткові новинки -->
-        </ul>
-    </section>   
+        <h4>Новинки <button>Всі новинки ></button></h4>
+        <div class="product-line">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var product in Model.OrderByDescending(p => p.CreatedDate).Take(2))
+                {
+                    @Html.Partial("_ProductItem", product)
+                }
+            }
+        </div>
+    </section>
 
 
 </body>
