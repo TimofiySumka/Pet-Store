@@ -13,6 +13,8 @@ namespace MySite.Models
 
         [Required]
         public string Description { get; set; }
+        [Required]
+        public string FullDescription { get; set; }
 
         [Required]
         public decimal Price { get; set; }
@@ -32,14 +34,15 @@ namespace MySite.Models
 
         [Required]
         public int Stock { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public string? ImageUrl { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Category' обов'язкове для заповнення.")]
+        [Required]
         public int CategoryId { get; set; }
-        [Required(ErrorMessage = "Поле 'Brand' обов'язкове для заповнення.")]
+        [Required]
         public int BrandId { get; set; }
-        [Required(ErrorMessage = "Поле 'AnimalType' обов'язкове для заповнення.")]
+        [Required]
         public int AnimalTypeId { get; set; }
 
 
