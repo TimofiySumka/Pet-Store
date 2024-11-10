@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MySite.Areas.Identity.Data;
 using MySite.Models;
 
 namespace MySite.Data
@@ -24,8 +25,9 @@ namespace MySite.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             // Настройки для Product
+            modelBuilder.Entity<User>().ToTable("AspNetUsers");
+
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasColumnType("decimal(18,2)");

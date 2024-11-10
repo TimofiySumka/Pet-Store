@@ -79,7 +79,7 @@ using (var scope = app.Services.CreateScope()) // Завжди створювати адміністрато
     string name = "Адміністратор";
     string password = "Aa123123";
 
-    if (await userManager.FindByEmailAsync(email) == null)
+    if (!string.IsNullOrEmpty(email) && await userManager.FindByEmailAsync(email) == null)
     {
         var user = new User
         {

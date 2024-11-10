@@ -1,4 +1,5 @@
-﻿using MySite.Areas.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using MySite.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,8 +16,9 @@ namespace MySite.Models
         [Required]
         public int ProductId { get; set; }
 
+
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public virtual IdentityUser User { get; set; }
 
         public virtual Product Product { get; set; }
     }
