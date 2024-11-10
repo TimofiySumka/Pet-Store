@@ -161,3 +161,22 @@ footer {
                 .footer-column ul li a:hover {
                     text-decoration: underline;
                 }
+
+
+
+.crud-btn {
+    margin-right: 5px;
+    color: #fff;
+}
+
+    .crud-btn.btn-warning {
+        background-color: #ffc107;
+    }
+
+    .crud-btn.btn-info {
+        background-color: #17a2b8;
+    }
+
+    .crud-btn.btn-danger {
+        background-color: #dc3545;
+    }

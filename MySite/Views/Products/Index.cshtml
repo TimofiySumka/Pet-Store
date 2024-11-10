@@ -1,115 +1,38 @@
-﻿@model IEnumerable<MySite.Models.Product>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Товари";
+    ViewData["CreateAction"] = "Create";
 }
-
-<h1>Index</h1>
 @await Html.PartialAsync("_DBList")
 
+<h2 class="table-title">@ViewData["TableName"]</h2>
+<partial name="_CRUDToolBar" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiscountPrecent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnimalType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AgeCategory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductWeight)
-            </th>
-            <th></th>
+            <th>Назва</th>
+            <th>Категорія</th>
+            <th>Ціна</th>
+            <th>Знижка</th>
+            <th>Кількість</th>
+            <th>Дії</th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountPrecent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnimalType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AgeCategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductWeight)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody id="itemsTableBody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Category.Name</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.DiscountPrecent?.ToString("P") ?? "0%"</td>
+                <td>@item.Stock</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

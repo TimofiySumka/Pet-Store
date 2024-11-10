@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySite.Data;
 
@@ -11,9 +12,11 @@ using MySite.Data;
 namespace MySite.Migrations
 {
     [DbContext(typeof(MySiteContext))]
-    partial class MySiteContextModelSnapshot : ModelSnapshot
+    [Migration("20241110212045_DBSCreation")]
+    partial class DBSCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,9 +285,13 @@ namespace MySite.Migrations
 
                     b.HasKey("CartId");
 
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cart", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("MySite.Models.CartItem", b =>
@@ -313,7 +320,7 @@ namespace MySite.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItem", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("MySite.Models.Category", b =>
@@ -367,12 +374,9 @@ namespace MySite.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CartId")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("MySite.Models.OrderItem", b =>
@@ -401,7 +405,7 @@ namespace MySite.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem", (string)null);
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("MySite.Models.Product", b =>
@@ -563,11 +567,18 @@ namespace MySite.Migrations
 
             modelBuilder.Entity("MySite.Models.Cart", b =>
                 {
+                    b.HasOne("MySite.Models.Order", "Order")
+                        .WithOne("Cart")
+                        .HasForeignKey("MySite.Models.Cart", "OrderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("MySite.Areas.Identity.Data.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Order");
 
                     b.Navigation("User");
                 });
@@ -593,19 +604,11 @@ namespace MySite.Migrations
 
             modelBuilder.Entity("MySite.Models.Order", b =>
                 {
-                    b.HasOne("MySite.Models.Cart", "Cart")
-                        .WithOne("Order")
-                        .HasForeignKey("MySite.Models.Order", "CartId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
                     b.HasOne("MySite.Areas.Identity.Data.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("User");
                 });
@@ -700,9 +703,6 @@ namespace MySite.Migrations
             modelBuilder.Entity("MySite.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("Order")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MySite.Models.Category", b =>
@@ -712,6 +712,9 @@ namespace MySite.Migrations
 
             modelBuilder.Entity("MySite.Models.Order", b =>
                 {
+                    b.Navigation("Cart")
+                        .IsRequired();
+
                     b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618

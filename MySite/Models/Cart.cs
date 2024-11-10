@@ -10,10 +10,13 @@ namespace MySite.Models
         [Key]
         public int CartId { get; set; }
 
-        public int UserId { get; set; }
         [Required]
-        public virtual User User { get; set; }
+        public string UserId { get; set; }  // Внешний ключ для User
+        public User User { get; set; }  // Навигационное свойство для User
 
-        public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+        public int? OrderId { get; set; }  // Внешний ключ для Order, может быть null, если нет заказа
+        public Order Order { get; set; }  // Навигационное свойство для Order
+
+        public ICollection<CartItem> CartItems { get; set; }
     }
 }

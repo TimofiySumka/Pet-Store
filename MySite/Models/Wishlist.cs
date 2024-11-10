@@ -18,7 +18,7 @@ namespace MySite.Models
 
 
         [ForeignKey("UserId")]
-        public virtual IdentityUser User { get; set; }
+        public virtual User User { get; set; }
 
         public virtual Product Product { get; set; }
     }

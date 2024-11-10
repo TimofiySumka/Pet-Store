@@ -2,36 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MySite.Areas.Identity.Data;
 using MySite.Data;
 using MySite.Models;
 
 namespace MySite.Controllers
 {
-    public class WishlistsController : Controller
+    public class OrderItemsController : Controller
     {
         private readonly MySiteContext _context;
-        private readonly UserManager<User> _userManager;
 
-
-        public WishlistsController(MySiteContext context, UserManager<User> userManager)
+        public OrderItemsController(MySiteContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // GET: Wishlists
+        // GET: OrderItems
         public async Task<IActionResult> Index()
         {
-            var mySiteContext = _context.Wishlist.Include(w => w.Product).Include(w => w.User);
+            var mySiteContext = _context.OrderItem.Include(o => o.Order).Include(o => o.Product);
             return View(await mySiteContext.ToListAsync());
         }
 
-        // GET: Wishlists/Details/5
+        // GET: OrderItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,45 +34,45 @@ namespace MySite.Controllers
                 return NotFound();
             }
 
-            var wishlist = await _context.Wishlist
-                .Include(w => w.Product)
-                .Include(w => w.User)
+            var orderItem = await _context.OrderItem
+                .Include(o => o.Order)
+                .Include(o => o.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (wishlist == null)
+            if (orderItem == null)
             {
                 return NotFound();
             }
 
-            return View(wishlist);
+            return View(orderItem);
         }
 
-        // GET: Wishlists/Create
+        // GET: OrderItems/Create
         public IActionResult Create()
         {
+            ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "Address");
             ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Wishlists/Create
+        // POST: OrderItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,ProductId")] Wishlist wishlist)
+        public async Task<IActionResult> Create([Bind("Id,OrderId,ProductId,Quantity,UnitPrice")] OrderItem orderItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(wishlist);
+                _context.Add(orderItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description", wishlist.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", wishlist.UserId);
-            return View(wishlist);
+            ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "Address", orderItem.OrderId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description", orderItem.ProductId);
+            return View(orderItem);
         }
 
-        // GET: Wishlists/Edit/5
+        // GET: OrderItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,24 +80,24 @@ namespace MySite.Controllers
                 return NotFound();
             }
 
-            var wishlist = await _context.Wishlist.FindAsync(id);
-            if (wishlist == null)
+            var orderItem = await _context.OrderItem.FindAsync(id);
+            if (orderItem == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description", wishlist.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", wishlist.UserId);
-            return View(wishlist);
+            ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "Address", orderItem.OrderId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description", orderItem.ProductId);
+            return View(orderItem);
         }
 
-        // POST: Wishlists/Edit/5
+        // POST: OrderItems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ProductId")] Wishlist wishlist)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderId,ProductId,Quantity,UnitPrice")] OrderItem orderItem)
         {
-            if (id != wishlist.Id)
+            if (id != orderItem.Id)
             {
                 return NotFound();
             }
@@ -111,12 +106,12 @@ namespace MySite.Controllers
             {
                 try
                 {
-                    _context.Update(wishlist);
+                    _context.Update(orderItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WishlistExists(wishlist.Id))
+                    if (!OrderItemExists(orderItem.Id))
                     {
                         return NotFound();
                     }
@@ -127,12 +122,12 @@ namespace MySite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description", wishlist.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", wishlist.UserId);
-            return View(wishlist);
+            ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "Address", orderItem.OrderId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Description", orderItem.ProductId);
+            return View(orderItem);
         }
 
-        // GET: Wishlists/Delete/5
+        // GET: OrderItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,36 +135,36 @@ namespace MySite.Controllers
                 return NotFound();
             }
 
-            var wishlist = await _context.Wishlist
-                .Include(w => w.Product)
-                .Include(w => w.User)
+            var orderItem = await _context.OrderItem
+                .Include(o => o.Order)
+                .Include(o => o.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (wishlist == null)
+            if (orderItem == null)
             {
                 return NotFound();
             }
 
-            return View(wishlist);
+            return View(orderItem);
         }
 
-        // POST: Wishlists/Delete/5
+        // POST: OrderItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wishlist = await _context.Wishlist.FindAsync(id);
-            if (wishlist != null)
+            var orderItem = await _context.OrderItem.FindAsync(id);
+            if (orderItem != null)
             {
-                _context.Wishlist.Remove(wishlist);
+                _context.OrderItem.Remove(orderItem);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool WishlistExists(int id)
+        private bool OrderItemExists(int id)
         {
-            return _context.Wishlist.Any(e => e.Id == id);
+            return _context.OrderItem.Any(e => e.Id == id);
         }
     }
 }

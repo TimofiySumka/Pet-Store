@@ -13,8 +13,7 @@ builder.Services.AddDbContext<MySiteDBContext>(options =>
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<MySiteDBContext>();
-
+    .AddEntityFrameworkStores<MySiteContext>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

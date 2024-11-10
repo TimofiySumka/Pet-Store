@@ -6,20 +6,21 @@ namespace MySite.Models
     public class CartItem
     {
         [Key]
-        public int CartItemId { get; set; }
+        public int Id { get; set; }
 
-        public int CartId { get; set; }
+        [Required]
+        public int CartId { get; set; }  // Внешний ключ для Cart
+        public Cart Cart { get; set; }  // Навигационное свойство для Cart
 
-        public int ProductId { get; set; }
+        [Required]
+        public int ProductId { get; set; }  // Внешний ключ для Product
+        public Product Product { get; set; }  // Навигационное свойство для Product
 
-        public int Quantity { get; set; } = 1;
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal UnitPrice { get; set; }  // Цена за единицу товара
 
-        public decimal Price { get; set; }
-
-        [ForeignKey("CartId")]
-        public virtual Cart Cart { get; set; } 
-
-        [ForeignKey("ProductId")]
-        public virtual Product Product { get; set; } 
+        [Required]
+        public int Quantity { get; set; }
     }
 }
