@@ -1,23 +1,84 @@
 ﻿@model IEnumerable<MySite.Areas.Identity.Data.User>
 
-<h2>Список користувачів</h2>
+@{
+    ViewData["Title"] = "Список користувачів";
+    var tableTitle = ViewData["Title"] = "Список користувачів";
+}
+
 @await Html.PartialAsync("_DBList")
-<table class="table">
+
+<div class="tools-bar">
+    <div class="center">
+        <h3>@tableTitle</h3>
+    </div>
+    <div class="right">
+        <input type="text" id="searchInput" class="form-control" placeholder="Пошук..." />
+        <button type="button" id="searchButton" class="btn btn-secondary" onclick="searchItems()">Пошук</button>
+    </div>
+</div>
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Ім'я користувача</th>
             <th>Електронна пошта</th>
-            <th>Пароль</th>
+            <th>ID</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="itemsTableBody">
         @foreach (var user in Model)
         {
             <tr>
                 <td>@user.Name</td>
                 <td>@user.Email</td>
-                <td>@user.PasswordHash</td>
+                <td>@user.Id</td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function searchItems() {
+        var input = document.getElementById("searchInput").value.toLowerCase();
+        var table = document.getElementById("itemsTableBody");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+            var userName = cells[0]?.innerText.toLowerCase() || '';
+            var email = cells[1]?.innerText.toLowerCase() || '';
+            var id = cells[2]?.innerText.toLowerCase() || '';
+
+            if (userName.includes(input) || email.includes(input) || id.includes(input)) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+<style>
+    .tools-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .tools-bar .center {
+        flex: 1;
+        text-align: center;
+    }
+
+    .tools-bar .right {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .tools-bar .right input {
+        margin-right: 5px;
+    }
+</style>

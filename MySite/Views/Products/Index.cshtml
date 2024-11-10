@@ -4,7 +4,7 @@
 }
 @await Html.PartialAsync("_DBList")
 
-<h2 class="table-title">@ViewData["TableName"]</h2>
+<h2 class="table-title"></h2>
 <partial name="_CRUDToolBar" />
 
 <table class="table table-striped">
@@ -24,8 +24,8 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Category.Name</td>
-                <td>@item.Price.ToString("C")</td>
-                <td>@item.DiscountPrecent?.ToString("P") ?? "0%"</td>
+                <td>@($"{item.Price} ₴")</td>
+                <td>@($"{item.DiscountPrecent} %")</td>
                 <td>@item.Stock</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>

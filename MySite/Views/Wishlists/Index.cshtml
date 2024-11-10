@@ -1,41 +1,45 @@
 ﻿@model IEnumerable<MySite.Models.Wishlist>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Список бажаного";
+    ViewData["CreateAction"] = "Create";
 }
 
-<h1>Index</h1>
+@await Html.PartialAsync("_DBList")
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<h2 class="table-title"></h2>
+<partial name="_CRUDToolBar" />
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th></th>
+            <th>Користувач</th>
+            <th>Продукт</th>
+            <th>Дії</th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody id="itemsTableBody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.Name</td> 
+                <td>@item.Product.Name</td> 
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<style>
+    .table-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+</style>
