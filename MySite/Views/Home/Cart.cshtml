@@ -1,6 +1,9 @@
-﻿@{
+﻿@model MySite.Models.Cart
+
+@{
     ViewData["Title"] = "Кошик";
 }
+
 <head>
     <link rel="stylesheet" href="~/css/sidebar.css">
     <link rel="stylesheet" href="~/css/cart.css">
@@ -17,19 +20,44 @@
 
             <div class="info-section right-align">
                 <button class="btn-buy-all">Купити все</button>
-                <p class="item-count">Кількість товарів: 0</p>
+                <p class="item-count">Кількість товарів: @(Model?.CartItems?.Count() ?? 0)</p>
             </div>
 
-            <div class="empty-cart-message-container">
-                <p class="empty-cart-message">На жаль, Ваш кошик порожній. Перейдіть на головну сторінку для оформлення замовлення.</p>
-                <a href="~/Home/Index" class="btn-home">Перейти на головну</a>
-            </div>
-
-            <div class="product-list">
-            </div>
+            @if (Model?.CartItems == null || !Model.CartItems.Any())
+            {
+                <div class="empty-cart-message-container">
+                    <p class="empty-cart-message">На жаль, Ваш кошик порожній. Перейдіть на головну сторінку для оформлення замовлення.</p>
+                    <a href="~/Home/Index" class="btn-home">Перейти на головну</a>
+                </div>
+            }
+            else
+            {
+                <div class="product-list">
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <div class="product-item">
+                            <div class="product-image">
+                                <img src="@item.Product.ImageUrl" alt="@item.Product.Name" />
+                            </div>
+                            <div class="product-details">
+                                <h2>@item.Product.Name</h2>
+                                <p>Кількість: @item.Quantity</p>
+                            </div>
+                            <div class="product-price">
+                                @if (item.Product.DiscountPrecent > 0)
+                                {
+                                    <span class="original-price">@item.Product.Price.ToString("0.00") ₴</span>
+                                    <span class="discounted-price">@item.Product.DiscountPrice.Value.ToString("0.00") ₴</span>
+                                }
+                                else
+                                {
+                                    <span class="price">@item.UnitPrice.ToString("0.00") ₴</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
-
-
-
 </body>

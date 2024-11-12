@@ -9,20 +9,21 @@ namespace MySite.Data
 {
     public class MySiteContext : IdentityDbContext<User>
     {
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Wishlist> Wishlist { get; set; }
+        public DbSet<MySite.Models.Order> Order { get; set; }
+        public DbSet<MySite.Models.OrderItem> OrderItem { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; } 
+        public DbSet<Brand> Brand { get; set; }
+        public DbSet<AnimalType> AnimalType { get; set; }
+
         public MySiteContext(DbContextOptions<MySiteContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Product> Product { get; set; } = default!;
-        public DbSet<Category> Category { get; set; } = default!;
-        public DbSet<Wishlist> Wishlist { get; set; } = default!;
-        public DbSet<MySite.Models.Order> Order { get; set; } = default!;
-        public DbSet<MySite.Models.OrderItem> OrderItem { get; set; } = default!;
-        public DbSet<Cart> Carts { get; set; } = default!;
-        public DbSet<CartItem> CartItems { get; set; } = default!;
-        public DbSet<Brand> Brand { get; set; } = default!;
-        public DbSet<AnimalType> AnimalType { get; set; } = default!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,30 +38,22 @@ namespace MySite.Data
             modelBuilder.Entity<User>().ToTable("AspNetUsers").HasNoDiscriminator();
 
             modelBuilder.Entity<Product>()
-                .Property(p => p.Price)
-                .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<Product>()
-                .Property(p => p.ProductWeight)
-                .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany()
-                .HasForeignKey(p => p.CategoryId)
-                .IsRequired();
+               .HasOne(p => p.AnimalType)
+               .WithMany()
+               .HasForeignKey(p => p.AnimalTypeId)
+               .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Brand)
                 .WithMany()
                 .HasForeignKey(p => p.BrandId)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Product>()
-                .HasOne(p => p.AnimalType)
+                .HasOne(p => p.Category)
                 .WithMany()
-                .HasForeignKey(p => p.AnimalTypeId)
-                .IsRequired();
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Wishlist>()
                 .HasOne(w => w.User)

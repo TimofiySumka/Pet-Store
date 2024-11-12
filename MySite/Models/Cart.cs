@@ -11,11 +11,11 @@ namespace MySite.Models
         public int CartId { get; set; }
 
         [Required]
-        public string UserId { get; set; }  // Внешний ключ для User
-        public User User { get; set; }  // Навигационное свойство для User
+        public string UserId { get; set; }  
+        public User User { get; set; }  
 
-        public int? OrderId { get; set; }  // Внешний ключ для Order, может быть null, если нет заказа
-        public Order Order { get; set; }  // Навигационное свойство для Order
+        public int? OrderId { get; set; }  
+        public Order Order { get; set; }  
 
         public ICollection<CartItem> CartItems { get; set; }
     }

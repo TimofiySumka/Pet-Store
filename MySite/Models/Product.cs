@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySite.Models
 {
@@ -13,6 +14,7 @@ namespace MySite.Models
 
         [Required]
         public string Description { get; set; }
+
         [Required]
         public string FullDescription { get; set; }
 
@@ -20,6 +22,7 @@ namespace MySite.Models
         public decimal Price { get; set; }
 
         public int DiscountPrecent { get; set; }
+
         public decimal? DiscountPrice
         {
             get
@@ -39,22 +42,23 @@ namespace MySite.Models
         public string? ImageUrl { get; set; }
 
         [Required]
+        [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        [Required]
-        public int BrandId { get; set; }
-        [Required]
-        public int AnimalTypeId { get; set; }
 
+        [Required]
+        [ForeignKey("Brand")]
+        public int BrandId { get; set; }
+
+        [Required]
+        [ForeignKey("AnimalType")]
+        public int AnimalTypeId { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual AnimalType AnimalType { get; set; }
 
-
         public string AgeCategory { get; set; }
-
         public string ProductSize { get; set; }
-
         public decimal ProductWeight { get; set; }
     }
 }

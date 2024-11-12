@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MySite.Data;
 using MySite.Models;
+using Microsoft.Extensions.Logging;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 
 namespace MySite.Controllers
 {
@@ -15,10 +17,14 @@ namespace MySite.Controllers
     public class ProductsController : Controller
     {
         private readonly MySiteContext _context;
+        private readonly ILogger<ProductsController> _logger; // Добавьте логгер
 
-        public ProductsController(MySiteContext context)
+
+        public ProductsController(MySiteContext context, ILogger<ProductsController> logger)
         {
             _context = context;
+            _logger = logger; // Инициализируйте логгер
+
         }
 
         // GET: Products
@@ -49,12 +55,12 @@ namespace MySite.Controllers
             return View(product);
         }
 
+
+
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name");
-            ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name");
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
+            PopulateDropdowns();
             return View();
         }
 
@@ -63,29 +69,84 @@ namespace MySite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,FullDescription,Price,DiscountPrecent,Stock,CreatedDate,ImageUrl,CategoryId,BrandId,AnimalTypeId,AgeCategory,ProductSize,ProductWeight")] Product product, IFormFile imageFile)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation("Начало создания продукта. Название: {Name}, Цена: {Price}, Категория ID: {CategoryId}", product.Name, product.Price, product.CategoryId);
+
+            if (!ModelState.IsValid)
             {
-                if (imageFile != null && imageFile.Length > 0)
+                _logger.LogWarning("Модель не прошла валидацию. Ошибки:");
+
+                foreach (var error in ModelState)
+                {
+                    foreach (var subError in error.Value.Errors)
+                    {
+                        _logger.LogWarning("Ошибка в поле {Field}: {ErrorMessage}", error.Key, subError.ErrorMessage);
+                    }
+                }
+
+                PopulateDropdowns(product.CategoryId, product.BrandId, product.AnimalTypeId);
+                return View(product);
+            }
+
+
+            if (product.CategoryId == 0)
+            {
+                product.CategoryId = 1;
+                _logger.LogInformation("CategoryId не заполнен, установлено значение по умолчанию: 1");
+            }
+            if (product.BrandId == 0)
+            {
+                product.BrandId = 1;
+                _logger.LogInformation("BrandId не заполнен, установлено значение по умолчанию: 1");
+            }
+            if (product.AnimalTypeId == 0)
+            {
+                product.AnimalTypeId = 1;
+                _logger.LogInformation("AnimalTypeId не заполнен, установлено значение по умолчанию: 1");
+            }
+
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                try
                 {
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", imageFile.FileName);
-
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(fileStream);
                     }
-
                     product.ImageUrl = "/uploads/" + imageFile.FileName;
                 }
-
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Ошибка при сохранении файла изображения");
+                    ModelState.AddModelError("ImageUrl", "Ошибка при загрузке файла.");
+                    PopulateDropdowns(product.CategoryId, product.BrandId, product.AnimalTypeId);
+                    return View(product);
+                }
             }
 
-            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name", product.AnimalTypeId);
-            ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", product.CategoryId);
-            return View(product);
+            try
+            {
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Продукт успешно создан.");
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при сохранении продукта в базе данных");
+                ModelState.AddModelError(string.Empty, "Ошибка при сохранении продукта. Попробуйте еще раз.");
+                PopulateDropdowns(product.CategoryId, product.BrandId, product.AnimalTypeId);
+                return View(product);
+            }
+
+
+        }
+
+        private void PopulateDropdowns(int? selectedCategoryId = null, int? selectedBrandId = null, int? selectedAnimalTypeId = null)
+        {
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", selectedCategoryId);
+            ViewData["BrandId"] = new SelectList(_context.Brand, "Id", "Name", selectedBrandId);
+            ViewData["AnimalTypeId"] = new SelectList(_context.AnimalType, "Id", "Name", selectedAnimalTypeId);
         }
 
         // GET: Products/Edit/5
