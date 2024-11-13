@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using MySite.Areas.Identity.Data;
 using MySite.Data;
@@ -16,7 +17,33 @@ public class CatalogController : Controller
         _userManager = userManager;
     }
 
+
     [HttpPost]
+
+    private async Task BadgeCount()
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            ViewData["WishlistCount"] = await _context.Wishlist.CountAsync(w => w.UserId == user.Id);
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.UserId == user.Id);
+            ViewData["CartCount"] = cart?.CartItems.Count ?? 0;
+        }
+        else
+        {
+            ViewData["WishlistCount"] = 0;
+            ViewData["CartCount"] = 0;
+        }
+    }
+
+    public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    {
+        await BadgeCount();
+        await next(); // продолжить выполнение действия после вызова BadgeCount
+    }
+
     public async Task<IActionResult> AddToWishlist(int productId)
     {
         var user = await _userManager.GetUserAsync(User);
@@ -30,7 +57,6 @@ public class CatalogController : Controller
 
         if (existingWishlistItem == null)
         {
-            // Додавання
             var wishlistItem = new Wishlist
             {
                 UserId = user.Id,
@@ -42,7 +68,6 @@ public class CatalogController : Controller
         }
         else
         {
-            // Видалення
             _context.Wishlist.Remove(existingWishlistItem);
             await _context.SaveChangesAsync();
             return Ok();

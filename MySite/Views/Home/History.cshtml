@@ -1,0 +1,91 @@
+﻿@model MySite.Models.ViewModels.OrderHistoryViewModel
+
+@{
+    ViewData["Title"] = "Історія замовлень";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/sidebar.css">
+    <link rel="stylesheet" href="~/css/history.css">
+    <link rel="stylesheet" href="~/css/cart.css">
+</head>
+
+<body>
+    <div class="profile-container">
+        @Html.Partial("_Sidebar")
+
+        <div class="orders-container">
+            <div class="header">
+                <h1 class="centered-title">Історія замовлень</h1>
+            </div>
+
+            @if (Model.Orders == null || !Model.Orders.Any())
+            {
+                <div class="empty-order-message-container">
+                    <p class="empty-order-message">У вас немає замовлень. Перейдіть на головну сторінку для здійснення покупок.</p>
+                    <a href="~/Home/Index" class="btn-home">Перейти на головну</a>
+                </div>
+            }
+            else
+            {
+                <div class="order-list">
+                    @foreach (var order in Model.Orders)
+                    {
+                        <div class="order-item" onclick="toggleOrderDetails(@order.OrderId)">
+                            <div class="order-info">
+                                <span>№ @order.OrderId</span>
+                                <span>Дата замовлення: @order.OrderDate.ToString("dd.MM.yyyy")</span>
+                            </div>
+                            <span class="order-status @(order.Status switch {
+                                "Збирається" => "status-pending",
+                                "В дорозі" => "status-shipping",
+                                "Очікує на пункті видачі" => "status-ready",
+                                "Отримано" => "status-received",
+                                "Відмінено" => "status-cancelled",
+                                _ => ""
+                            })">
+                                @order.Status
+                            </span>
+                            <span class="order-total">Загальна сума: @order.TotalAmount.ToString("0.00") ₴</span>
+                            <span class="dropdown-arrow">&#9662;</span>
+                        </div>
+
+                        <div id="order-details-@order.OrderId" class="order-details" style="display: none;">
+                            <table class="order-items-table">
+                                @foreach (var item in order.OrderItems)
+                                {
+                                    <tr>
+                                        <td class="item-image">
+                                            <img src="@item.Product.ImageUrl" alt="@item.Product.Name" />
+                                        </td>
+                                        <td class="item-info">
+                                            <span class="item-name">@item.Product.Name</span>
+                                            <span class="item-quantity">@item.Quantity шт. x @item.UnitPrice.ToString("0.00") ₴</span>
+                                        </td>
+                                        <td class="item-total">
+                                            <span>@(item.Quantity * item.UnitPrice)₴</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                            <div class="order-summary">
+                                <div class="order-address"><strong>Адреса доставки:</strong> @order.Address</div>
+                                <div class="order-grand-total"><strong>Загалом:</strong> @order.TotalAmount.ToString("0.00") ₴</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</body>
+<script>
+    function toggleOrderDetails(orderId) {
+        var details = document.getElementById("order-details-" + orderId);
+        if (details.style.display === "none") {
+            details.style.display = "block";
+        } else {
+            details.style.display = "none";
+        }
+    }
+</script>

@@ -40,22 +40,15 @@ namespace MySite.Models
         public DateTime CreatedDate { get; set; }
 
         public string? ImageUrl { get; set; }
-
         [Required]
-        [ForeignKey("Category")]
         public int CategoryId { get; set; }
-
+        public Category Category { get; set; }
         [Required]
-        [ForeignKey("Brand")]
         public int BrandId { get; set; }
-
+        public Brand Brand { get; set; } 
         [Required]
-        [ForeignKey("AnimalType")]
         public int AnimalTypeId { get; set; }
-
-        public virtual Category Category { get; set; }
-        public virtual Brand Brand { get; set; }
-        public virtual AnimalType AnimalType { get; set; }
+        public AnimalType AnimalType { get; set; }
 
         public string AgeCategory { get; set; }
         public string ProductSize { get; set; }

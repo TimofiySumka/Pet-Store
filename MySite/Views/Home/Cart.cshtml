@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "Кошик";
+
+    decimal totalPrice = Model?.CartItems?.Sum(item =>
+        item.Quantity * (item.Product.DiscountPrecent > 0 ? item.Product.DiscountPrice ?? item.Product.Price : item.Product.Price)
+    ) ?? 0;
 }
 
 <head>
@@ -18,8 +22,7 @@
                 <h1 class="centered-title">Ваш кошик</h1>
             </div>
 
-            <div class="info-section right-align">
-                <button class="btn-buy-all">Купити все</button>
+            <div class="info-section">
                 <p class="item-count">Кількість товарів: @(Model?.CartItems?.Count() ?? 0)</p>
             </div>
 
@@ -36,13 +39,23 @@
                     @foreach (var item in Model.CartItems)
                     {
                         <div class="product-item">
+                            <input type="checkbox" class="product-checkbox">
+
                             <div class="product-image">
                                 <img src="@item.Product.ImageUrl" alt="@item.Product.Name" />
                             </div>
-                            <div class="product-details">
+
+                            <div class="product-info">
                                 <h2>@item.Product.Name</h2>
-                                <p>Кількість: @item.Quantity</p>
+                                <p>@item.Product.Description</p>
+
+                                <div class="product-quantity">
+                                    <button class="btn-decrease" onclick="updateQuantity(@item.Id, -1)">-</button>
+                                    <input type="text" readonly value="@item.Quantity" />
+                                    <button class="btn-increase" onclick="updateQuantity(@item.Id, 1)">+</button>
+                                </div>
                             </div>
+
                             <div class="product-price">
                                 @if (item.Product.DiscountPrecent > 0)
                                 {
@@ -54,10 +67,37 @@
                                     <span class="price">@item.UnitPrice.ToString("0.00") ₴</span>
                                 }
                             </div>
+
+                            <div class="product-actions">
+                                <button class="btn-delete" onclick="removeItem(@item.Id)">
+                                    <img src="~/imgs/delete.png" alt="Видалити">
+                                </button>
+                            </div>
                         </div>
                     }
+                </div>
+
+                <div class="total-price-bar">
+                    <div class="total-price-container">
+                        <p class="total-price">Загальна сума: <span>@totalPrice.ToString("0.00") ₴</span></p>
+                        <button class="btn-buy-all">Оформити замовлення</button>
+                    </div>
                 </div>
             }
         </div>
     </div>
 </body>
+
+<script>
+    function updateQuantity(itemId, change) {
+        $.post('/Cart/UpdateQuantity', { id: itemId, change: change }, function (data) {
+            location.reload();
+        });
+    }
+
+    function removeItem(itemId) {
+        $.post('/Cart/RemoveItem', { id: itemId }, function (data) {
+            location.reload();
+        });
+    }
+</script>

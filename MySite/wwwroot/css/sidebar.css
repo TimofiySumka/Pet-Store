@@ -1,34 +1,51 @@
-﻿.profile-container {
+﻿
+.profile-container {
+    font-size:17px;
     display: flex;
     align-items: flex-start;
+    height: 100vh; 
 }
 
+
 .sidebar {
-    width: 200px;
+    width: 250px; 
     background-color: #f9f9f9;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: sticky;
+    top: 0;
+    overflow-y: auto; 
 }
+
 
 .sidebar-menu {
     list-style: none;
     padding: 0;
+    margin: 0;
+    flex-grow: 1;
 }
 
     .sidebar-menu li {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 
         .sidebar-menu li a {
             text-decoration: none;
             color: #333;
             font-weight: bold;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 4px;
         }
 
             .sidebar-menu li a:hover {
                 color: #149EF2;
+                background-color: #f0f0f0; 
             }
 
     .sidebar-menu .active a {

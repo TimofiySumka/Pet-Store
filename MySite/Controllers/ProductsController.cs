@@ -17,13 +17,13 @@ namespace MySite.Controllers
     public class ProductsController : Controller
     {
         private readonly MySiteContext _context;
-        private readonly ILogger<ProductsController> _logger; // Добавьте логгер
+
 
 
         public ProductsController(MySiteContext context, ILogger<ProductsController> logger)
         {
             _context = context;
-            _logger = logger; // Инициализируйте логгер
+
 
         }
 
@@ -69,40 +69,14 @@ namespace MySite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,FullDescription,Price,DiscountPrecent,Stock,CreatedDate,ImageUrl,CategoryId,BrandId,AnimalTypeId,AgeCategory,ProductSize,ProductWeight")] Product product, IFormFile imageFile)
         {
-            _logger.LogInformation("Начало создания продукта. Название: {Name}, Цена: {Price}, Категория ID: {CategoryId}", product.Name, product.Price, product.CategoryId);
 
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning("Модель не прошла валидацию. Ошибки:");
-
-                foreach (var error in ModelState)
-                {
-                    foreach (var subError in error.Value.Errors)
-                    {
-                        _logger.LogWarning("Ошибка в поле {Field}: {ErrorMessage}", error.Key, subError.ErrorMessage);
-                    }
-                }
 
                 PopulateDropdowns(product.CategoryId, product.BrandId, product.AnimalTypeId);
                 return View(product);
             }
 
-
-            if (product.CategoryId == 0)
-            {
-                product.CategoryId = 1;
-                _logger.LogInformation("CategoryId не заполнен, установлено значение по умолчанию: 1");
-            }
-            if (product.BrandId == 0)
-            {
-                product.BrandId = 1;
-                _logger.LogInformation("BrandId не заполнен, установлено значение по умолчанию: 1");
-            }
-            if (product.AnimalTypeId == 0)
-            {
-                product.AnimalTypeId = 1;
-                _logger.LogInformation("AnimalTypeId не заполнен, установлено значение по умолчанию: 1");
-            }
 
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -117,7 +91,6 @@ namespace MySite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Ошибка при сохранении файла изображения");
                     ModelState.AddModelError("ImageUrl", "Ошибка при загрузке файла.");
                     PopulateDropdowns(product.CategoryId, product.BrandId, product.AnimalTypeId);
                     return View(product);
@@ -128,13 +101,10 @@ namespace MySite.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                _logger.LogInformation("Продукт успешно создан.");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при сохранении продукта в базе данных");
-                ModelState.AddModelError(string.Empty, "Ошибка при сохранении продукта. Попробуйте еще раз.");
                 PopulateDropdowns(product.CategoryId, product.BrandId, product.AnimalTypeId);
                 return View(product);
             }

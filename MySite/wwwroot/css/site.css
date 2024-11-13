@@ -1,19 +1,48 @@
 
 .container {
     width: 100%;
+    min-height: 100vh;
     max-width: 100%;
 }
 
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
     font-family: Comfortaa, Arial, sans-serif;
     background-color: white;
     color: #333;
 }
+/*Значок товарів у списках*/
 
-/* Верхушка */
-header {
+.badge-cart {
+    background-color: #ff9800;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: -5px;
+    right: 56px;
+    z-index: 1;
+}
+
+.badge-wish {
+    background-color: #ff9800;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: -5px;
+    right: 68px;
+    z-index: 1;
+
+}
+    /* Верхушка */
+    header {
     color: white;
     background-color: #195f70;
     display: flex;
@@ -81,15 +110,25 @@ header {
 
 /* Опції */
 
+.user-options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 
 .user-options a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
     color: white;
-    text-decoration: none;
     margin-left: 20px;
+    text-decoration: none;
+
 }
 
 .user-options img {
     height: 28px;
+    margin-right: 10px;
 }
 
 /* Низ */

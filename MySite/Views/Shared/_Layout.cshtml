@@ -2,7 +2,6 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
 @inject UserManager<MySite.Areas.Identity.Data.User> UserManager
-
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -44,14 +43,23 @@
         </div>
 
         <div class="user-options">
-            <a href="/Home/Wishlist"> <img src="~/imgs/paw.png" alt="Обране іконка"> Обране</a>
-            <a href="/Home/Cart"> <img src="~/imgs/shopping-basket.png" alt="Корзина іконка"> Кошик</a>
+            
+            <a href="/Home/Wishlist">
+                <span class="badge-wish">@ViewData["WishlistCount"]</span>
+                <img src="~/imgs/paw.png" alt="Обране іконка">
+                Обране
+            </a>
+            <a href="/Home/Cart">
+                <span class="badge-cart">@ViewData["CartCount"]</span>
+                <img src="~/imgs/shopping-basket.png" alt="Корзина іконка">
+                Кошик
+            </a>
 
             @if (SignInManager.IsSignedIn(User))
             {
                 var user = await UserManager.GetUserAsync(User);
-                <a href="/Identity/Account/Manage">Привіт,@user.Name!</a>
-                <a href = "/Identity/Account/Logout" > Вихід </a>
+                <a href="/Identity/Account/Manage">Привіт, @user.Name!</a>
+                <a href="/Identity/Account/Logout">Вихід</a>
             }
             else
             {

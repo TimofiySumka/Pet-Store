@@ -24,9 +24,13 @@
         </li>
         <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Cart" ? "active" : "")">
             <a href="~/Home/Cart">Кошик</a>
+        </li>      
+        </li>
+        <li class="@(ViewContext.RouteData.Values["action"].ToString() == "History" ? "active" : "")">
+            <a href="~/Home/History">Історія замовлень</a>
         </li>
         <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Logout" ? "active" : "")">
             <a href="~/Identity/Account/Manage">Вийти</a>
-        </li>
+
     </ul>
 </div>

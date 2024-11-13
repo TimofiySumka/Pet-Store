@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MySite.Models;
+using MySite.Models.ViewModels;
 using MySite.Data;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using MySite.Areas.Identity.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace MySite.Controllers
 {
@@ -21,6 +24,29 @@ namespace MySite.Controllers
             _userManager = userManager;
         }
 
+        private async Task BadgeCount()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                ViewData["WishlistCount"] = await _context.Wishlist.CountAsync(w => w.UserId == user.Id);
+                var cart = await _context.Carts
+                    .Include(c => c.CartItems)
+                    .FirstOrDefaultAsync(c => c.UserId == user.Id);
+                ViewData["CartCount"] = cart?.CartItems.Count ?? 0;
+            }
+            else
+            {
+                ViewData["WishlistCount"] = 0;
+                ViewData["CartCount"] = 0;
+            }
+        }
+
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            await BadgeCount();
+            await next(); 
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -30,18 +56,18 @@ namespace MySite.Controllers
                 .Include(p => p.AnimalType)
                 .ToListAsync();
 
-            return View(products);  
+            return View(products);
         }
 
 
         public IActionResult About()
         {
+
             return View();
         }
 
         public async Task<IActionResult> Wishlist()
         {
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -56,9 +82,43 @@ namespace MySite.Controllers
             return View(wishlistItems);
         }
 
-        public IActionResult Cart()
+        public async Task<IActionResult> Cart()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                    .ThenInclude(ci => ci.Product)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart == null)
+            {
+                ViewData["CartExists"] = false;
+                return View();
+            }
+
+            ViewData["CartExists"] = true;
+            ViewData["IsCartEmpty"] = !cart.CartItems.Any();
+
+
+            return View(cart);
+        }
+
+        public async Task<IActionResult> History()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var orders = await _context.Order
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product) 
+                .ToListAsync();
+
+            var model = new OrderHistoryViewModel
+            {
+                Orders = orders
+            };
+
+            return View("History", model);
         }
 
         public IActionResult Login()

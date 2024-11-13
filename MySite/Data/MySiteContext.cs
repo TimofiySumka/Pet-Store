@@ -55,6 +55,15 @@ namespace MySite.Data
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18, 2)");
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.ProductWeight)
+                .HasColumnType("decimal(18, 2)");
+
+
             modelBuilder.Entity<Wishlist>()
                 .HasOne(w => w.User)
                 .WithMany()
