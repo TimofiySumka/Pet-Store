@@ -41,7 +41,7 @@ public class CatalogController : Controller
     public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         await BadgeCount();
-        await next(); // продолжить выполнение действия после вызова BadgeCount
+        await next(); 
     }
 
     public async Task<IActionResult> AddToWishlist(int productId)

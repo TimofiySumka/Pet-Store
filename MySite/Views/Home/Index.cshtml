@@ -50,33 +50,32 @@
     </section>
 
     <!-- Акції -->
-
-    <section class="product-offers">
-        <h4>Акції та пропозиції <button>Всі акції та пропозиції ></button></h4>
-        <div class="product-line">
-            @if (Model != null && Model.Any())
+<section class="product-offers">
+        <div class="category-button">Акції та пропозиції <button>Всі акції та пропозиції ></button></div>
+    <div class="product-line">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var product in Model.Where(p => p.DiscountPrecent > 0)) 
             {
-                @foreach (var product in Model.Where(p => p.DiscountPrecent > 0).Take(2))
-                {
-                    @Html.Partial("_ProductItem", product)
-                }
+                @Html.Partial("_ProductItem", product)
             }
-        </div>
-    </section>
+        }
+    </div>
+</section>
 
-    <!-- Новинки -->
-    <section class="product-offers">
-        <h4>Новинки <button>Всі новинки ></button></h4>
-        <div class="product-line">
-            @if (Model != null && Model.Any())
+<!-- Новинки -->
+<section class="product-offers">
+        <div class="category-button">Новинки <button>Всі новинки ></button></div>
+    <div class="product-line">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var product in Model.OrderByDescending(p => p.CreatedDate))
             {
-                @foreach (var product in Model.OrderByDescending(p => p.CreatedDate).Take(2))
-                {
-                    @Html.Partial("_ProductItem", product)
-                }
+                @Html.Partial("_ProductItem", product)
             }
-        </div>
-    </section>
+        }
+    </div>
+</section>
 
 
 </body>

@@ -92,27 +92,36 @@
 
 
 .product-line {
-    display: flex; /* Используем flexbox для горизонтального расположения */
-    flex-wrap: nowrap; /* Не разрешаем перенос строк */
-    gap: 20px; /* Расстояние между товарами */
-    justify-content: flex-start; /* Выравнивание товаров по началу строки */
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    justify-content: flex-start;
     margin: 0;
     padding: 0;
-    overflow-x: auto; /* Добавляем горизонтальную прокрутку, если товаров слишком много */
+    overflow-x: auto;
 }
 
+.product-offers {
+    margin-bottom: 80px; 
+}
 
-.product-offers button {
+.category-button {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.category-button button {
     font-size: 14px;
-    padding: 8px 12px;
+    padding: 7px 12px;
     background-color: white;
     color: black;
     border: solid;
-    border-width: 2px;
+    border-width:2px;
     border-radius: 9px;
 }
 
-    .product-offers button:hover {
+    .category-button button:hover {
         background-color: #FF9E03;
+        border-color: #E18E00;
         color: white;
     }
