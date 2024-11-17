@@ -28,16 +28,16 @@
                     <li><a href="/Catalog/Index">@Localizer["Catalog"]</a></li>
                     @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
                     {
-                        <li><a href="/Products">@Localizer["DB"]</a></li>
+                        <li><a href="/Products">@Localizer["AdminPanel"]</a></li>
                     }
-                    <li><a href="?culture=uk">Укр</a>|<a href="?culture=en">Eng</a></li>
+                    <li><a href="?culture=uk-UA">Укр</a>|<a href="?culture=en">Eng</a></li>
                 </ul>
             </nav>
         </div>
 
         <div class="search-bar">
             <form asp-controller="Catalog" asp-action="Index" method="get">
-                <input type="text" name="searchQuery" placeholder="@Localizer["SearchPlaceholder"]" />
+                <input type="text" name="searchQuery" placeholder="@Localizer["SearchBar"]" />
                 <button type="submit">@Localizer["Search"]</button>
             </form>
         </div>
@@ -45,18 +45,18 @@
         <div class="user-options">
             <a href="/Home/Wishlist">
                 <span class="badge-wish">@ViewData["WishlistCount"]</span>
-                <img src="~/imgs/paw.png" alt="@Localizer["WishlistIconAlt"]">
+                <img src="~/imgs/paw.png" alt="paw-icon">
                 @Localizer["Wishlist"]
             </a>
             <a href="/Home/Cart">
                 <span class="badge-cart">@ViewData["CartCount"]</span>
-                <img src="~/imgs/shopping-basket.png" alt="@Localizer["CartIconAlt"]">
+                <img src="~/imgs/shopping-basket.png" alt="Cart-icon">
                 @Localizer["Cart"]
             </a>
             @if (SignInManager.IsSignedIn(User))
             {
                 var user = await UserManager.GetUserAsync(User);
-                <a href="/Identity/Account/Manage">@Localizer["Hello"] @user.Name!</a>
+                <a href="/Identity/Account/Manage">@Localizer["Hello"], @user.Name!</a>
                 <a href="/Identity/Account/Logout">@Localizer["Logout"]</a>
             }
             else

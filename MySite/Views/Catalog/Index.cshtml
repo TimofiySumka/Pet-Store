@@ -3,6 +3,8 @@
 @inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
 @inject UserManager<MySite.Areas.Identity.Data.User> UserManager
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Каталог товарів";
@@ -16,26 +18,26 @@
 
 <div class="catalog-container">
     <div class="sidebar">
-        <h3>Фільтри</h3>
+        <h3>@Localizer["Filters"]</h3>
 
         <div class="price-filter">
-            <input type="number" id="minPrice" placeholder="Мін" min="0"
+            <input type="number" id="minPrice" placeholder="@Localizer["MinPrice"]" min="0"
                    value="@ViewData["MinPrice"] ?? " " " />
             <span>₴</span>
             <span style="margin: 0 10px;">—</span>
-            <input type="number" id="maxPrice" placeholder="Макс" min="0"
+            <input type="number" id="maxPrice" placeholder="@Localizer["MaxPrice"]" min="0"
                    value="@ViewData["MaxPrice"] ?? " " " />
             <span>₴</span>
         </div>
 
         <div class="filter-section">
             <label class="filter-title">
-                <input type="checkbox" id="inStock" @(ViewData["InStock"] != null && (bool)ViewData["InStock"] ? "checked" : "")> В наявності
+                <input type="checkbox" id="inStock" @(ViewData["InStock"] != null && (bool)ViewData["InStock"] ? "checked" : "")> @Localizer["InStock"]
             </label>
         </div>
 
         <div class="filter-section">
-            <h4 class="filter-title">Категорія:</h4>
+            <h4 class="filter-title">@Localizer["CategoryFilterTitle"]</h4>
             <ul class="category-list">
                 @if (ViewData["Categories"] != null)
                 {
@@ -55,7 +57,7 @@
         </div>
 
         <div class="filter-section">
-            <h4 class="filter-title">Бренд:</h4>
+            <h4 class="filter-title"> @Localizer["BrandFilterTitle"]:</h4>
             <ul class="brand-list">
                 @if (ViewData["Brands"] != null)
                 {
@@ -75,7 +77,7 @@
         </div>
 
         <div class="filter-section">
-            <h4 class="filter-title">Тип тварини:</h4>
+            <h4 class="filter-title"> @Localizer["AnimalTypeFilterTitle"]:</h4>
             <ul class="animal-type-list">
                 @if (ViewData["AnimalTypes"] != null)
                 {
@@ -95,25 +97,24 @@
         </div>
 
         <div class="filter-section">
-            <button id="filter" class="btn-filter">Фільтрувати</button>
+            <button id="filter" class="btn-filter">@Localizer["FilterButton"]</button>
         </div>
     </div>
-
 
     <div class="main-content">
         <div class="search-option-bar">
             <div class="search-title">
                 @if (!string.IsNullOrEmpty(searchQuery))
                 {
-                    <h3>Результати пошуку: @searchQuery</h3>
+                    <h3>@Localizer["SearchResults"] @searchQuery</h3>
                 }
             </div>
             <div class="sort-options">
-                <label for="sortOrder">Сортування:</label>
+                <label for="sortOrder">@Localizer["SortOrderLabel"]</label>
                 <select id="sortOrder">
-                    <option value="priceDesc">Від дорогих до дешевих</option>
-                    <option value="priceAsc">Від дешевих до дорогих</option>
-                    <option value="discount">По акціям</option>
+                    <option value="priceDesc">@Localizer["SortPriceDesc"]</option>
+                    <option value="priceAsc">@Localizer["SortPriceAsc"]</option>
+                    <option value="discount">@Localizer["SortDiscount"]</option>
                 </select>
             </div>
         </div>
@@ -128,7 +129,7 @@
             }
             else
             {
-                <p>Немає товарів для відображення.</p>
+                <p>@Localizer["NoProducts"]</p>
             }
         </div>
     </div>

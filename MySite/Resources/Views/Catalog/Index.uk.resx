@@ -117,28 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>Головна</value>
+  <data name="CatalogTitle" xml:space="preserve">
+    <value>Каталог товарів</value>
   </data>
-  <data name="Catalog" xml:space="preserve">
-    <value>Каталог</value>
+  <data name="Filters" xml:space="preserve">
+    <value>Фільтри</value>
   </data>
-  <data name="Wishlist" xml:space="preserve">
-    <value>Обране</value>
+  <data name="MinPrice" xml:space="preserve">
+    <value>Мін</value>
   </data>
-  <data name="Cart" xml:space="preserve">
-    <value>Кошик</value>
+  <data name="MaxPrice" xml:space="preserve">
+    <value>Макс</value>
   </data>
-  <data name="SignOut" xml:space="preserve">
-    <value>Вихід</value>
+  <data name="InStock" xml:space="preserve">
+    <value>В наявності</value>
   </data>
-  <data name="Hello" xml:space="preserve">
-    <value>Привіт</value>
+  <data name="CategoryFilterTitle " xml:space="preserve">
+    <value>Категорія</value>
   </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>Вхід/Реєстрація</value>
+  <data name="BrandFilterTitle" xml:space="preserve">
+    <value>Бренд</value>
   </data>
-  <data name="AdminPanel" xml:space="preserve">
-    <value>БД</value>
+  <data name="AnimalTypeFilterTitle" xml:space="preserve">
+    <value>Тип тварини</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Фільтрувати</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Результати пошуку</value>
+  </data>
+  <data name="SortOrderLabel" xml:space="preserve">
+    <value>Сортування</value>
+  </data>
+  <data name="SortPriceDesc" xml:space="preserve">
+    <value>Від дорогих до дешевих</value>
+  </data>
+  <data name="SortPriceAsc" xml:space="preserve">
+    <value>Від дешевих до дорогих</value>
+  </data>
+  <data name="SortDiscount" xml:space="preserve">
+    <value>По акціям</value>
+  </data>
+  <data name="NoProducts" xml:space="preserve">
+    <value>Немає товарів для відображення</value>
   </data>
 </root>

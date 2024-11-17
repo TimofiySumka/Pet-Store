@@ -117,28 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="BannerTitle" xml:space="preserve">
+    <value />
   </data>
-  <data name="Catalog" xml:space="preserve">
-    <value>Catalog</value>
+  <data name="BannerSubtitle" xml:space="preserve">
+    <value />
   </data>
-  <data name="Wishlist" xml:space="preserve">
-    <value>Wishlist</value>
+  <data name="ShopNow" xml:space="preserve">
+    <value />
   </data>
-  <data name="Cart" xml:space="preserve">
-    <value>Cart</value>
+  <data name="MainCategoriesTitle" xml:space="preserve">
+    <value />
   </data>
-  <data name="SignOut" xml:space="preserve">
-    <value>SignOut</value>
+  <data name="CatsCategory" xml:space="preserve">
+    <value />
   </data>
-  <data name="Hello" xml:space="preserve">
-    <value>Hello</value>
+  <data name="DogsCategory" xml:space="preserve">
+    <value />
   </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>Sign In/Sign Up</value>
+  <data name="RodentsCategory" xml:space="preserve">
+    <value />
   </data>
-  <data name="AdminPanel" xml:space="preserve">
-    <value>DB</value>
+  <data name="BirdsCategory" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PromotionsTitle" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AllPromotionsButton" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NewArrivalsTitle" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AllNewArrivalsButton" xml:space="preserve">
+    <value />
   </data>
 </root>
