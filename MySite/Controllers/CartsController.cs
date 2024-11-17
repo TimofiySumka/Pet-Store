@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MySite.Areas.Identity.Data;
 using MySite.Data;
 using MySite.Models;
 
@@ -17,87 +15,11 @@ namespace MySite.Controllers
     public class CartsController : Controller
     {
         private readonly MySiteContext _context;
-        private readonly UserManager<User> _userManager;
 
-        public CartsController(MySiteContext context, UserManager<User> userManager)
+        public CartsController(MySiteContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateQuantity(int id, int change)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-
-            var cartItem = await _context.CartItems
-                .Include(ci => ci.Product)
-                .FirstOrDefaultAsync(ci => ci.Id == id && ci.Cart.UserId == user.Id);
-
-            if (cartItem == null)
-            {
-                return NotFound();
-            }
-
-            var newQuantity = cartItem.Quantity + change;
-            if (newQuantity > cartItem.Product.Stock)
-            {
-                return BadRequest();
-            }
-
-            if (newQuantity <= 0)
-            {
-                _context.CartItems.Remove(cartItem);
-            }
-            else
-            {
-                cartItem.Quantity = newQuantity;
-            }
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SetQuantity(int id, int quantity)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-
-            var cartItem = await _context.CartItems
-                .Include(ci => ci.Product)
-                .FirstOrDefaultAsync(ci => ci.Id == id && ci.Cart.UserId == user.Id);
-
-            if (cartItem == null)
-            {
-                return NotFound();
-            }
-
-            if (quantity > cartItem.Product.Stock)
-            {
-                return BadRequest();
-            }
-
-            if (quantity <= 0)
-            {
-                _context.CartItems.Remove(cartItem);
-            }
-            else
-            {
-                cartItem.Quantity = quantity;
-            }
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
 
         // GET: Carts
         public async Task<IActionResult> Index()
@@ -106,61 +28,8 @@ namespace MySite.Controllers
             return View(await mySiteContext.ToListAsync());
         }
 
-        public async Task<IActionResult> AddToCart(int productId, int quantity = 1)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-
-            var cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .FirstOrDefaultAsync(c => c.UserId == user.Id);
-
-            if (cart == null)
-            {
-
-                cart = new Cart
-                {
-                    UserId = user.Id,
-                    CartItems = new List<CartItem>()
-                };
-                _context.Carts.Add(cart);
-                await _context.SaveChangesAsync();
-            }
-
-
-            var cartItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
-            if (cartItem != null)
-            {
-                cartItem.Quantity += quantity;
-            }
-            else
-            {
-                var product = await _context.Product.FindAsync(productId);
-                if (product == null)
-                {
-                    return NotFound();
-                }
-
-                cartItem = new CartItem
-                {
-                    CartId = cart.CartId,
-                    ProductId = productId,
-                    Quantity = quantity,
-                    UnitPrice = product.Price
-                };
-                _context.CartItems.Add(cartItem);
-            }
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-    
-
-    // GET: Carts/Details/5
-    public async Task<IActionResult> Details(int? id)
+        // GET: Carts/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -184,7 +53,6 @@ namespace MySite.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
-
 
         // POST: Carts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

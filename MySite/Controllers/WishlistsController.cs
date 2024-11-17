@@ -13,7 +13,7 @@ using MySite.Models;
 
 namespace MySite.Controllers
 {
-
+    [Authorize(Roles = "Admin")]
     public class WishlistsController : Controller
     {
         private readonly MySiteContext _context;
@@ -26,53 +26,6 @@ namespace MySite.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToWishlist(int productId)
-        {
-            var userId = _userManager.GetUserId(User);
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-            var existingWishlistItem = await _context.Wishlist
-                .FirstOrDefaultAsync(w => w.UserId == userId && w.ProductId == productId);
-
-            if (existingWishlistItem == null)
-            {
-                var wishlistItem = new Wishlist
-                {
-                    UserId = userId,
-                    ProductId = productId
-                };
-
-                _context.Wishlist.Add(wishlistItem);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> IsInWishlist(int productId)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-
-            var exists = await _context.Wishlist
-                .AnyAsync(w => w.UserId == user.Id && w.ProductId == productId);
-
-            return Ok(exists);
-        }
-        [Authorize(Roles = "Admin")]
         // GET: Wishlists
         public async Task<IActionResult> Index()
         {
@@ -80,7 +33,6 @@ namespace MySite.Controllers
             return View(await mySiteContext.ToListAsync());
         }
 
-        [Authorize(Roles = "Admin")]
         // GET: Wishlists/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -100,7 +52,7 @@ namespace MySite.Controllers
 
             return View(wishlist);
         }
-        [Authorize(Roles = "Admin")]
+
         // GET: Wishlists/Create
         public IActionResult Create()
         {
@@ -112,7 +64,6 @@ namespace MySite.Controllers
         // POST: Wishlists/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,ProductId")] Wishlist wishlist)
@@ -129,7 +80,6 @@ namespace MySite.Controllers
         }
 
         // GET: Wishlists/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -150,7 +100,6 @@ namespace MySite.Controllers
         // POST: Wishlists/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ProductId")] Wishlist wishlist)
@@ -186,7 +135,6 @@ namespace MySite.Controllers
         }
 
         // GET: Wishlists/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -207,7 +155,6 @@ namespace MySite.Controllers
         }
 
         // POST: Wishlists/Delete/5
-        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -33,38 +33,7 @@ namespace MySite.Controllers
             var mySiteContext = _context.Product.Include(p => p.AnimalType).Include(p => p.Brand).Include(p => p.Category);
             return View(await mySiteContext.ToListAsync());
         }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateStock(int productId, int newStock)
-        {
-            var product = await _context.Product.FindAsync(productId);
-            if (product == null)
-            {
-                return NotFound();
-            }
 
-            product.Stock = newStock;
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Details), new { id = productId });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApplyDiscount(int productId, int discountPercent)
-        {
-            var product = await _context.Product.FindAsync(productId);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            product.DiscountPrecent = discountPercent;
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Details), new { id = productId });
-        }
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
