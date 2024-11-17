@@ -2,6 +2,8 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
 @inject UserManager<MySite.Areas.Identity.Data.User> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <head>
     <link rel="stylesheet" href="~/css/сataloge.css">
@@ -10,7 +12,7 @@
 
 <div class="product-item">
     <a href="javascript:void(0);" class="favorite-icon" onclick="addToWishlist(@Model.Id)">
-        <img src="~/imgs/fav-un.png" alt="Добавить в избранное" id="favorite-icon-@Model.Id" />
+        <img src="~/imgs/fav-un.png" alt="Fav-icon" id="favorite-icon-@Model.Id" />
     </a>
 
     @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
@@ -24,7 +26,7 @@
     <div class="product-title">@Model.Name</div>
     <div class="product-description">@Model.Description</div>
     <div class="product-availability @(Model.Stock > 0 ? "in-stock" : "out-of-stock")">
-        @(Model.Stock > 0 ? "В наявності" : "Немає в наявності")
+        @(Model.Stock > 0 ? Localizer["InStock"] : Localizer["OutOfStock"])
     </div>
 
     @if (Model.DiscountPrecent > 0)
@@ -42,6 +44,6 @@
     }
 
     <div class="button-container">
-        <button class="buy-button">Купити</button>
+        <button class="buy-button">@Localizer["BuyButton"]</button>
     </div>
 </div>

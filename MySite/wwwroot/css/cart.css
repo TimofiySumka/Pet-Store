@@ -107,9 +107,10 @@
 }
 
 .product-quantity input {
-    width: 50px; 
+    background-color: #ececec;
+    width: 50px;
     height: 40px;
-    font-size: 20px; 
+    font-size: 20px;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -226,12 +227,14 @@
 
 .total-price {
     font-size: 18px;
+
     color: #333; 
     font-weight: bold;
     margin-right: 15px;
 }
 
     .total-price span {
+
         font-size: 24px;
     }
 

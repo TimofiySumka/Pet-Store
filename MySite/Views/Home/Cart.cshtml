@@ -51,8 +51,11 @@
 
                                 <div class="product-quantity">
                                     <button class="btn-decrease" onclick="updateQuantity(@item.Id, -1)">-</button>
-                                    <input type="text" readonly value="@item.Quantity" />
+                                    <input type="number" value="@item.Quantity" min="1" max="@item.Product.Stock" onchange="setQuantity(@item.Id, this.value)" />
                                     <button class="btn-increase" onclick="updateQuantity(@item.Id, 1)">+</button>
+                                </div>
+                                <div class="product-quantity-info">
+                                    <p>Доступно: @item.Product.Stock</p>
                                 </div>
                             </div>
 
@@ -90,14 +93,26 @@
 
 <script>
     function updateQuantity(itemId, change) {
-        $.post('/Cart/UpdateQuantity', { id: itemId, change: change }, function (data) {
-            location.reload();
-        });
+        $.post('/Cart/UpdateQuantity', { id: itemId, change: change })
+            .done(function () {
+                location.reload();
+            })
+            .fail(function (response) {
+                alert(response.responseText);
+            });
     }
 
-    function removeItem(itemId) {
-        $.post('/Cart/RemoveItem', { id: itemId }, function (data) {
-            location.reload();
-        });
+    function setQuantity(itemId, quantity) {
+        if (quantity <= 0) {
+            return;
+        }
+
+        $.post('/Cart/SetQuantity', { id: itemId, quantity: quantity })
+            .done(function () {
+                location.reload();
+            })
+            .fail(function (response) {
+                alert(response.responseText);
+            });
     }
 </script>

@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MySite.Data;
 using Microsoft.AspNetCore.Identity;
 using MySite.Areas.Identity.Data;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Razor;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MySiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MySiteContext") ?? throw new InvalidOperationException("Connection string 'MySiteContext' not found.")));
@@ -22,11 +24,29 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { "en", "uk" }; 
+    options.SetDefaultCulture("uk")
+           .AddSupportedCultures(supportedCultures)
+           .AddSupportedUICultures(supportedCultures);
+
+});
+
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+
+
 builder.Services.AddRazorPages();
 var app = builder.Build();
-
+app.UseRequestLocalization();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -38,7 +58,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
+app.UseRequestLocalization(localizationOptions);
 app.UseRouting();
 
 app.UseAuthentication();

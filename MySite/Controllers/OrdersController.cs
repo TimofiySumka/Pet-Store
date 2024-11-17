@@ -21,6 +21,31 @@ namespace MySite.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> FilterStatus(string status)
+        {
+            var orders = string.IsNullOrEmpty(status)
+                ? _context.Order.Include(o => o.Cart).Include(o => o.User)
+                : _context.Order.Include(o => o.Cart).Include(o => o.User).Where(o => o.Status == status);
+
+            return View("Index", await orders.ToListAsync());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int orderId, string newStatus)
+        {
+            var order = await _context.Order.FindAsync(orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.Status = newStatus;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = orderId });
+        }
+
         // GET: Orders
         public async Task<IActionResult> Index()
         {

@@ -2,6 +2,9 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
 @inject UserManager<MySite.Areas.Identity.Data.User> UserManager
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,54 +19,49 @@
 <body >
     <header>
         <div class="logo">
-            <a href="/Home/Index"><img src="~/imgs/Logo.png" alt="Логотип магазина" /> </a>
-
+            <a href="/Home/Index"><img src="~/imgs/Logo.png" alt="Логотип магазина" /></a>
         </div>
         <div class="user-options">
-        <nav>
-            <ul>
-                <li><a href="/Home/Index">Головна</a></li>
-                <li><a href="/Catalog/Index">Каталог</a></li>
+            <nav>
+                <ul>
+                    <li><a href="/Home/Index">@Localizer["Home"]</a></li>
+                    <li><a href="/Catalog/Index">@Localizer["Catalog"]</a></li>
                     @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin")))
                     {
-                        <a href="/Products">БД</a>
+                        <li><a href="/Products">@Localizer["AdminPanel"]</a></li>
                     }
-                <li><a href="/Home/About">Про нас</a></li>
-            </ul>
-        </nav>
+                    <li><a href="?culture=uk-UA">Укр</a>|<a href="?culture=en">Eng</a></li>
+                </ul>
+            </nav>
         </div>
 
         <div class="search-bar">
-            <div class="search-bar">
-                <form asp-controller="Catalog" asp-action="Index" method="get">
-                    <input type="text" name="searchQuery" placeholder="Я шукаю..." />
-                    <button type="submit">Пошук</button>
-                </form>
-            </div>
+            <form asp-controller="Catalog" asp-action="Index" method="get">
+                <input type="text" name="searchQuery" placeholder="@Localizer["SearchBar"]" />
+                <button type="submit">@Localizer["Search"]</button>
+            </form>
         </div>
 
         <div class="user-options">
-            
             <a href="/Home/Wishlist">
                 <span class="badge-wish">@ViewData["WishlistCount"]</span>
-                <img src="~/imgs/paw.png" alt="Обране іконка">
-                Обране
+                <img src="~/imgs/paw.png" alt="paw-icon">
+                @Localizer["Wishlist"]
             </a>
             <a href="/Home/Cart">
                 <span class="badge-cart">@ViewData["CartCount"]</span>
-                <img src="~/imgs/shopping-basket.png" alt="Корзина іконка">
-                Кошик
+                <img src="~/imgs/shopping-basket.png" alt="Cart-icon">
+                @Localizer["Cart"]
             </a>
-
             @if (SignInManager.IsSignedIn(User))
             {
                 var user = await UserManager.GetUserAsync(User);
-                <a href="/Identity/Account/Manage">Привіт, @user.Name!</a>
-                <a href="/Identity/Account/Logout">Вихід</a>
+                <a href="/Identity/Account/Manage">@Localizer["Hello"], @user.Name!</a>
+                <a href="/Identity/Account/Logout">@Localizer["Logout"]</a>
             }
             else
             {
-                <a href="/Identity/Account/Login">Вхід/Реєстрація <img src="~/imgs/user.png" alt="Користувач іконка"></a>
+                <a href="/Identity/Account/Login">@Localizer["Login"] <img src="~/imgs/user.png" alt="@Localizer["LoginIconAlt"]"></a>
             }
         </div>
     </header>

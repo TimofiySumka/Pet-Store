@@ -116,15 +116,15 @@ html, body {
     gap: 20px;
 }
 
-.user-options a {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    color: white;
-    margin-left: 20px;
-    text-decoration: none;
-
-}
+    .user-options a {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        color: white;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-decoration: none;
+    }
 
 .user-options img {
     height: 28px;

@@ -3,6 +3,8 @@
 @inject SignInManager<MySite.Areas.Identity.Data.User> SignInManager
 @inject UserManager<MySite.Areas.Identity.Data.User> UserManager
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 
 <!DOCTYPE html>
@@ -20,63 +22,68 @@
     <!-- Баннер -->
     <section class="main-banner">
         <div class="banner-content">
-            <h2>Час погодувати ваших <br /> пухнастих друзів!</h2>
-            <p>*На всі корми діє знижка 20%! </p>
-            <button>За покупками!</button>
+            <h2>@Localizer["BannerTitle"]</h2>
+            <p>@Localizer["BannerSubtitle"]</p>
+            <button>@Localizer["ShopNow"]</button>
         </div>
     </section>
 
-    <!--категорії -->
+    <!-- Категории -->
     <section class="main_categories">
-        <h2>Основні категорії</h2>
+        <h2>@Localizer["MainCategoriesTitle"]</h2>
         <div class="categories-list">
             <div class="category-item">
-                <img src="/imgs/cat.jpg" alt="Категорія:коти">
-                <p>>Все для котиків</p>
+                <img src="/imgs/cat.jpg" alt="@Localizer["CatsCategory"]">
+                <p>>@Localizer["CatsCategory"]</p>
             </div>
             <div class="category-item">
-                <img src="/imgs/dog.png" alt="Категорія:собаки">
-                <p>>Все для песиків</p>
+                <img src="/imgs/dog.png" alt="@Localizer["DogsCategory"]">
+                <p>>@Localizer["DogsCategory"]</p>
             </div>
             <div class="category-item">
-                <img src="/imgs/hamster.png" alt="Категорія:гризуни">
-                <p>>Все для гризунів</p>
+                <img src="/imgs/hamster.png" alt="@Localizer["RodentsCategory"]">
+                <p>>@Localizer["RodentsCategory"]</p>
             </div>
             <div class="category-item">
-                <img src="/imgs/parrot.png" alt="Категорія:птахи">
-                <p>>Все для пернатих</p>
+                <img src="/imgs/parrot.png" alt="@Localizer["BirdsCategory"]">
+                <p>>@Localizer["BirdsCategory"]</p>
             </div>
         </div>
     </section>
 
-    <!-- Акції -->
-<section class="product-offers">
-        <div class="category-button">Акції та пропозиції <button>Всі акції та пропозиції ></button></div>
-    <div class="product-line">
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var product in Model.Where(p => p.DiscountPrecent > 0)) 
+    <!-- Акции -->
+    <section class="product-offers">
+        <div class="category-button">
+            @Localizer["PromotionsTitle"]
+            <button>@Localizer["AllPromotionsButton"]</button>
+        </div>
+        <div class="product-line">
+            @if (Model != null && Model.Any())
             {
-                @Html.Partial("_ProductItem", product)
+                @foreach (var product in Model.Where(p => p.DiscountPrecent > 0))
+                {
+                    @Html.Partial("_ProductItem", product)
+                }
             }
-        }
-    </div>
-</section>
+        </div>
+    </section>
 
-<!-- Новинки -->
-<section class="product-offers">
-        <div class="category-button">Новинки <button>Всі новинки ></button></div>
-    <div class="product-line">
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var product in Model.OrderByDescending(p => p.CreatedDate))
+    <!-- Новинки -->
+    <section class="product-offers">
+        <div class="category-button">
+            @Localizer["NewArrivalsTitle"]
+            <button>@Localizer["AllNewArrivalsButton"]</button>
+        </div>
+        <div class="product-line">
+            @if (Model != null && Model.Any())
             {
-                @Html.Partial("_ProductItem", product)
+                @foreach (var product in Model.OrderByDescending(p => p.CreatedDate))
+                {
+                    @Html.Partial("_ProductItem", product)
+                }
             }
-        }
-    </div>
-</section>
-
+        </div>
+    </section>
 
 </body>
 </html>
